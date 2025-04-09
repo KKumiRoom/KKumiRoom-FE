@@ -25,7 +25,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   ghost: 'bg-transparent text-foreground',
 };
 
-const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,

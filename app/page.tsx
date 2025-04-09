@@ -1,23 +1,22 @@
-import Button from '@/components/atoms/Button';
+import Icon from '@/components/atoms/Icon';
+import { FaArrowLeft } from 'react-icons/fa';
+import { FaBell, FaUser, FaX } from 'react-icons/fa6';
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <Button disabled>
-        <span>Button</span>
-      </Button>
-      <Button variant="secondary">
-        <span>Button</span>
-      </Button>
-      <Button variant="tertiary">
-        <span>Button</span>
-      </Button>
-      <Button variant="ghost">
-        <span>Button</span>
-      </Button>
-      <Button size="fit">
-        paaaa
-      </Button>
+      <Icon size="sm">
+        <FaArrowLeft />
+      </Icon>
+      <Icon size="lg">
+        <FaX />
+      </Icon>
+      <Icon size="xl">
+        <FaUser />
+      </Icon>
+      <Icon size="xl">
+        <FaBell />
+      </Icon>
     </div>
   );
 }
