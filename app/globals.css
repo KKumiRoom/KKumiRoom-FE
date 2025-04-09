@@ -1,13 +1,15 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
-@import "tailwindcss/preflight";
-@tailwind utilities;
+@import "tailwindcss";
+
 
 :root {
   --background: #F8F8F8;
   --foreground: #464646;
   --primary: #61B89F;
-  --secondary: #D3EBCD;
-  --tertiary: #B1CDE2;
+  --secondary: #B1CDE2;
+  --tertiary: #839AA8;
+  --cloud: #FDFDFD;
+  --card: #D3EBCD;
   --device-width: 390px;
   --device-height: 844px;
   --outer-background: #FFFFFF;
@@ -19,6 +21,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-tertiary: var(--tertiary);
+  --color-cloud: var(--cloud);
   --font-pretendard: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
@@ -29,6 +32,7 @@
     --primary: #4D9A83;
     --secondary: #A8C9A3;
     --tertiary: #8BA6B8;
+    --cloud: #141414;
     --outer-background: #000000;
   }
 }
