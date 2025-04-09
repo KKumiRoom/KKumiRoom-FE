@@ -1,8 +1,13 @@
-import { ReactElement, cloneElement } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { ReactElement, cloneElement } from 'react';
 
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type IconColor = 'primary' | 'secondary' | 'tertiary' | 'foreground' | 'current';
+export type IconColor =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'foreground'
+  | 'current';
 
 export interface IconProps {
   children: ReactElement<{ className?: string }>;
@@ -27,7 +32,12 @@ const colorStyles: Record<IconColor, string> = {
   current: 'text-current',
 };
 
-const Icon = ({ children, size = 'md', color = 'current', className }: IconProps) => {
+const Icon = ({
+  children,
+  size = 'md',
+  color = 'current',
+  className,
+}: IconProps) => {
   const icon = cloneElement(children, {
     className: twMerge(sizeStyles[size], colorStyles[color], className),
   });
@@ -35,4 +45,4 @@ const Icon = ({ children, size = 'md', color = 'current', className }: IconProps
   return icon;
 };
 
-export default Icon; 
+export default Icon;

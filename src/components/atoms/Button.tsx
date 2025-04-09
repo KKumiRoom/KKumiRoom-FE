@@ -1,11 +1,12 @@
-import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import React from 'react';
 
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'fit';
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'ghost';
 export type ButtonType = 'button' | 'submit' | 'reset';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   variant?: ButtonVariant;
   fullWidth?: boolean;
@@ -15,7 +16,7 @@ const sizeStyles: Record<ButtonSize, string> = {
   sm: 'px-3 py-1.5 text-sm',
   md: 'px-4 py-2 text-base',
   lg: 'px-6 py-3 text-lg',
-  fit : 'p-1'
+  fit: 'p-1',
 };
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -38,7 +39,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none  disabled:opacity-50 disabled:pointer-events-none hover:cursor-pointer';
+    const baseStyles =
+      'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none  disabled:opacity-50 disabled:pointer-events-none hover:cursor-pointer';
     const widthStyles = fullWidth ? 'w-full' : '';
 
     const buttonStyles = twMerge(

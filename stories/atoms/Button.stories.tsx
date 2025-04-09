@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import Button from '@/components/atoms/Button';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'Atoms/Button',
@@ -110,4 +110,4 @@ export const Disabled: Story = {
     size: 'md',
     disabled: true,
   },
-}; 
+};

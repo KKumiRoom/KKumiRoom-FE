@@ -1,22 +1,14 @@
-import Icon from '@/components/atoms/Icon';
+'use client';
+
+import IconButton from '@/components/molecules/IconButton';
 import { FaArrowLeft } from 'react-icons/fa';
-import { FaBell, FaUser, FaX } from 'react-icons/fa6';
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <Icon size="sm">
+    <div className='flex flex-col items-center justify-center h-full'>
+      <IconButton onClick={() => alert('clicked')}>
         <FaArrowLeft />
-      </Icon>
-      <Icon size="lg">
-        <FaX />
-      </Icon>
-      <Icon size="xl">
-        <FaUser />
-      </Icon>
-      <Icon size="xl">
-        <FaBell />
-      </Icon>
+      </IconButton>
     </div>
   );
 }

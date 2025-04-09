@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
-
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "꾸미룸",
-  description: "꾸미룸",
+  title: '꾸미룸',
+  description: '꾸미룸',
 };
 
 export default function RootLayout({
@@ -13,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="device-container">{children}</body>
+    <html lang='ko'>
+      <body className='device-container'>{children}</body>
     </html>
   );
 }

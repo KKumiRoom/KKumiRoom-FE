@@ -1,10 +1,10 @@
-import Icon from '@/components/atoms/Icon';
+import IconButton from '@/components/molecules/IconButton';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FaX } from 'react-icons/fa6';
 
 const meta = {
-  title: 'Atoms/Icon',
-  component: Icon,
+  title: 'Molecules/IconButton',
+  component: IconButton,
   parameters: {
     layout: 'centered',
   },
@@ -15,20 +15,12 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
       description: '아이콘의 크기를 설정합니다.',
     },
-    color: {
-      control: 'select',
-      options: [
-        'primary',
-        'secondary',
-        'tertiary',
-        'cloud',
-        'foreground',
-        'current',
-      ],
-      description: '아이콘의 색상을 설정합니다.',
+    disabled: {
+      control: 'boolean',
+      description: '버튼의 비활성화 상태를 설정합니다.',
     },
   },
-} satisfies Meta<typeof Icon>;
+} satisfies Meta<typeof IconButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -68,34 +60,10 @@ export const XL: Story = {
   },
 };
 
-export const Primary: Story = {
+export const Disabled: Story = {
   args: {
     size: 'md',
-    color: 'primary',
-    children: <FaX />,
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    size: 'md',
-    color: 'secondary',
-    children: <FaX />,
-  },
-};
-
-export const Tertiary: Story = {
-  args: {
-    size: 'md',
-    color: 'tertiary',
-    children: <FaX />,
-  },
-};
-
-export const Foreground: Story = {
-  args: {
-    size: 'md',
-    color: 'foreground',
+    disabled: true,
     children: <FaX />,
   },
 };
