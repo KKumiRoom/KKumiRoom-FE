@@ -10,10 +10,10 @@ interface SearchFormProps {
   className?: string;
 }
 
-const SearchForm = ({ 
-  value, 
-  onChange, 
-  onSearch, 
+const SearchForm = ({
+  value,
+  onChange,
+  onSearch,
   placeholder = '검색어를 입력하세요',
   className = '',
 }: SearchFormProps) => {
@@ -31,24 +31,24 @@ const SearchForm = ({
   };
 
   return (
-    <div 
-      role="search"
-      aria-label="검색"
+    <div
+      role='search'
+      aria-label='검색'
       className={`flex items-center justify-between w-full bg-cloud rounded-xl px-2 py-1.5 border border-gray-200 ${className}`}
     >
-      <Input 
-        placeholder={placeholder} 
-        onChange={onChange} 
-        value={value} 
+      <Input
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
         className='text-sm'
         onKeyDown={handleKeyDown}
         aria-label={placeholder}
       />
-      <IconButton 
-        size='md' 
+      <IconButton
+        size='md'
         className='ml-2'
         onClick={handleSearch}
-        aria-label="검색하기"
+        aria-label='검색하기'
       >
         <IoMdSearch />
       </IconButton>

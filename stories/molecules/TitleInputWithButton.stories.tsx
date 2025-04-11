@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import TitleInputWithButton from '@/components/molecules/TitleInputWithButton';
-import { FaPlus } from 'react-icons/fa6';
 import IconButton from '@/components/molecules/IconButton';
+import TitleInputWithButton from '@/components/molecules/TitleInputWithButton';
+import type { Meta, StoryObj } from '@storybook/react';
 import { FaSearch } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa6';
 
 const meta = {
   title: 'Molecules/TitleInputWithButton',
@@ -30,7 +30,11 @@ export const WithSearchButton: Story = {
     onChange: (value) => console.log('Changed:', value),
     placeholder: '검색어를 입력하세요',
     button: (
-      <IconButton onClick={() => console.log('Search clicked')} size='md' className='mr-2'>
+      <IconButton
+        onClick={() => console.log('Search clicked')}
+        size='md'
+        className='mr-2'
+      >
         <FaSearch />
       </IconButton>
     ),
@@ -44,9 +48,13 @@ export const WithPlusButton: Story = {
     onChange: (value) => console.log('Changed:', value),
     placeholder: '항목을 입력하세요',
     button: (
-      <IconButton onClick={() => console.log('Plus clicked')} size='md' className='mr-2'>
+      <IconButton
+        onClick={() => console.log('Plus clicked')}
+        size='md'
+        className='mr-2'
+      >
         <FaPlus />
       </IconButton>
     ),
   },
-}; 
+};

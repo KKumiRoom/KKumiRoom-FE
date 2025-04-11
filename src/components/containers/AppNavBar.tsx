@@ -1,8 +1,8 @@
 'use client';
 
+import { PAGE, type Page } from '@/constants/navigation';
 import { usePathname, useRouter } from 'next/navigation';
 import NavBar from '../organisms/NavBar';
-import { PAGE, type Page } from '@/constants/navigation';
 
 const AppNavBar = () => {
   const pathname = usePathname();
@@ -19,12 +19,7 @@ const AppNavBar = () => {
     router.push(path);
   };
 
-  return (
-    <NavBar 
-      activePage={getActivePage()}
-      onNavigate={handleNavigation}
-    />
-  );
+  return <NavBar activePage={getActivePage()} onNavigate={handleNavigation} />;
 };
 
 export default AppNavBar;

@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import SearchForm from '@/components/molecules/SearchForm';
+import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
 const SearchFormWithState = () => {
   const [value, setValue] = useState('');
-  
+
   return (
     <SearchForm
       value={value}
       onChange={setValue}
       onSearch={() => {}}
-      placeholder="검색어를 입력하세요"
+      placeholder='검색어를 입력하세요'
     />
   );
 };
@@ -40,4 +40,4 @@ export const WithPlaceholder: Story = {
   args: {
     placeholder: '과목명을 입력하세요',
   },
-}; 
+};

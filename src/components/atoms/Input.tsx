@@ -15,7 +15,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         id={id}
-        type="text"
+        type='text'
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={onKeyDown}

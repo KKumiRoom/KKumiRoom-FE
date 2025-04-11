@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import NavBar from '@/components/organisms/NavBar';
 import { PAGE } from '@/constants/navigation';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'Organisms/NavBar',
@@ -59,4 +59,4 @@ export const RoadmapActive: Story = {
     activePage: PAGE.ROADMAP,
     onNavigate: (page) => console.log(`Navigating to ${page}`),
   },
-}; 
+};

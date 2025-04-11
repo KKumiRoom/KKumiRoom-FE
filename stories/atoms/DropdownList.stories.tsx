@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import DropdownList from '@/components/atoms/DropdownList';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'Atoms/DropdownList',
@@ -59,4 +59,4 @@ export const ManyOptions: Story = {
     onSelect: (option) => console.log('Selected:', option),
     isOpen: true,
   },
-}; 
+};

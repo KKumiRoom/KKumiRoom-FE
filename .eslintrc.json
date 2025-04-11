@@ -21,14 +21,23 @@
     "no-console": "error",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/function-component-definition": ["error", {
-      "namedComponents": ["arrow-function", "function-declaration"],
-      "unnamedComponents": "arrow-function"
-    }],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["arrow-function", "function-declaration"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "react/button-has-type": "off",
     "no-alert": "warn",
     "@typescript-eslint/lines-between-class-members": "off",
-    "@typescript-eslint/no-throw-literal": "off"
+    "@typescript-eslint/no-throw-literal": "off",
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/role-has-required-aria-props": "off"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

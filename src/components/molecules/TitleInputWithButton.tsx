@@ -24,15 +24,17 @@ const TitleInputWithButton = ({
 
   return (
     <div className={`mb-4 ${className}`}>
-      <label htmlFor={inputId} className="block text-lg font-bold mb-1">{title}</label>
-      <div className="relative">
-        <div className="flex justify-between border-b border-b-gray-500">
+      <label htmlFor={inputId} className='block text-lg font-bold mb-1'>
+        {title}
+      </label>
+      <div className='relative'>
+        <div className='flex justify-between border-b border-b-gray-500'>
           <Input
             id={inputId}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className="w-full px-2 py-1"
+            className='w-full px-2 py-1'
           />
           {button}
         </div>
@@ -42,4 +44,4 @@ const TitleInputWithButton = ({
   );
 };
 
-export default TitleInputWithButton; 
+export default TitleInputWithButton;

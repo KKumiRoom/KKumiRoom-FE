@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import Header from '@/components/organisms/Header';
-import { FaArrowLeft, FaArrowRight, FaUser } from 'react-icons/fa6';
+import type { Meta, StoryObj } from '@storybook/react';
 import { FaHome } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaUser } from 'react-icons/fa6';
 
 const meta = {
   title: 'Organisms/Header',
@@ -97,4 +97,4 @@ export const WithCustomIcons: Story = {
       onClick: () => console.log('다음 클릭'),
     },
   },
-}; 
+};

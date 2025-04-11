@@ -1,5 +1,5 @@
-import IconButton from '../molecules/IconButton';
 import { NAVIGATION_ITEMS, type Page } from '@/constants/navigation';
+import IconButton from '../molecules/IconButton';
 
 interface NavBarProps {
   activePage: Page;
@@ -15,9 +15,9 @@ const NavBar = ({ activePage, onNavigate }: NavBarProps) => {
         {NAVIGATION_ITEMS.map((item) => {
           const Icon = item.icon;
           return (
-            <IconButton 
+            <IconButton
               key={item.id}
-              size='lg' 
+              size='lg'
               text={item.label}
               className={`${isActive(item.id) ? 'text-primary scale-110' : 'text-grey'}`}
               onClick={() => onNavigate(item.id)}

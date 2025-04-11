@@ -5,9 +5,7 @@ const HeadLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <AppHeader />
-      <div className='pt-[4.5rem]'>
-        {children}
-      </div>
+      <div className='pt-[4.5rem]'>{children}</div>
       <AppNavBar />
     </div>
   );

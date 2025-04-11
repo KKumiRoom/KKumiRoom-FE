@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { FaAngleDown } from 'react-icons/fa6';
+import DropdownList from '@/components/atoms/DropdownList';
 import IconButton from '@/components/molecules/IconButton';
 import TitleInputWithButton from '@/components/molecules/TitleInputWithButton';
-import DropdownList from '@/components/atoms/DropdownList';
+import { FaAngleDown } from 'react-icons/fa6';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface DropdownFormProps {
   title: string;
@@ -23,10 +23,13 @@ const DropdownForm = ({
 }: DropdownFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -38,16 +41,24 @@ const DropdownForm = ({
   }, []);
 
   const toggleDropdown = useCallback(() => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   }, []);
-  
-  const handleSelect = useCallback((option: string) => {
-    onChange(option);
-    setIsOpen(false);
-  }, [onChange]);
+
+  const handleSelect = useCallback(
+    (option: string) => {
+      onChange(option);
+      setIsOpen(false);
+    },
+    [onChange]
+  );
 
   return (
-    <div ref={containerRef}>
+    <div
+      ref={containerRef}
+      role='combobox'
+      aria-expanded={isOpen}
+      aria-haspopup='listbox'
+    >
       <TitleInputWithButton
         title={title}
         value={value}
@@ -55,10 +66,11 @@ const DropdownForm = ({
         placeholder={placeholder}
         className={className}
         button={
-          <IconButton 
-            onClick={toggleDropdown} 
-            size='md' 
+          <IconButton
+            onClick={toggleDropdown}
+            size='md'
             className={`mr-2 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            aria-label='드롭다운 토글'
           >
             <FaAngleDown />
           </IconButton>
@@ -68,10 +80,11 @@ const DropdownForm = ({
           options={options}
           onSelect={handleSelect}
           isOpen={isOpen}
+          selectedOption={value}
         />
       </TitleInputWithButton>
     </div>
   );
 };
 
-export default DropdownForm; 
+export default DropdownForm;

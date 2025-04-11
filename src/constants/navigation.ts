@@ -1,5 +1,10 @@
-import { LuCalendarDays, LuFileText, LuHouse, LuSignpost } from 'react-icons/lu';
 import { IconType } from 'react-icons';
+import {
+  LuCalendarDays,
+  LuFileText,
+  LuHouse,
+  LuSignpost,
+} from 'react-icons/lu';
 
 export const PAGE = {
   HOME: 'home',
@@ -8,7 +13,7 @@ export const PAGE = {
   ROADMAP: 'roadmap',
 } as const;
 
-export type Page = typeof PAGE[keyof typeof PAGE];
+export type Page = (typeof PAGE)[keyof typeof PAGE];
 
 export interface NavigationItem {
   id: Page;
