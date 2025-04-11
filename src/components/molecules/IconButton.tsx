@@ -16,7 +16,7 @@ const IconButton = ({
   ...props
 }: IconButtonProps) => {
   return (
-    <Button variant='ghost' size='fit' className={`flex flex-col items-center gap-1 ${className}`} {...props}>
+    <Button variant='ghost' size='fit' className={`flex flex-col items-center ${className}`} {...props}>
       <Icon size={size}>{children}</Icon>
       {text && <p className='text-[.625rem] font-bold'>{text}</p>}
     </Button>

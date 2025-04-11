@@ -16,7 +16,7 @@ interface HeaderProps {
 
 const Header = ({ leftButton, rightButton }: HeaderProps) => {
     return (
-      <header className='flex items-center justify-between w-full py-5'>
+      <header className='fixed top-0 left-0 right-0 flex items-center justify-between w-[90%] bg-background py-5 mx-auto z-10'>
         <div className='w-8'>
           {leftButton && (
             <IconButton 

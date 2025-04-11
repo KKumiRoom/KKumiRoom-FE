@@ -11,7 +11,23 @@ const meta = {
     nextjs: {
       appDirectory: true,
     },
+    docs: {
+      story: {
+        inline: false,
+        iframeHeight: 200,
+      },
+    },
+    backgrounds: {
+      default: 'light',
+    },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '200px', position: 'relative' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
 } satisfies Meta<typeof Header>;
 
