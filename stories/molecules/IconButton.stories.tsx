@@ -60,6 +60,14 @@ export const XL: Story = {
   },
 };
 
+export const Text: Story = {
+  args: {
+    size: 'md',
+    text: '취소',
+    children: <FaX />,
+  },
+};
+
 export const Disabled: Story = {
   args: {
     size: 'md',

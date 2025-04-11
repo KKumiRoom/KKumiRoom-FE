@@ -13,7 +13,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className='device-container'>{children}</body>
+      <body className='device-container'>
+        <div className='flex flex-col min-h-screen w-[90%] mx-auto'>
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
