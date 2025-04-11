@@ -13,9 +13,9 @@ export interface ButtonProps
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-6 py-3 text-lg',
+  sm: 'px-3 py-1.5 text-sm rounded-lg',
+  md: 'px-4 py-2 text-base rounded-lg',
+  lg: 'px-6 py-3 text-lg rounded-xl',
   fit: 'p-1',
 };
 
@@ -41,7 +41,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const baseStyles =
       'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none  disabled:opacity-50 disabled:pointer-events-none hover:cursor-pointer';
-    const widthStyles = fullWidth ? 'w-full' : '';
+    const widthStyles = fullWidth ? 'w-full rounded-xl' : '';
 
     const buttonStyles = twMerge(
       baseStyles,
