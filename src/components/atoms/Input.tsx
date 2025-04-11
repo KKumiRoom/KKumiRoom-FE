@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, KeyboardEvent } from 'react';
 
 interface InputProps {
   id?: string;
@@ -6,10 +6,11 @@ interface InputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ id, value, onChange, placeholder, className = '' }, ref) => {
+  ({ id, value, onChange, placeholder, className = '', onKeyDown }, ref) => {
     return (
       <input
         ref={ref}
@@ -17,6 +18,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         className={`w-full px-2 py-1 focus:outline-none ${className}`}
       />
