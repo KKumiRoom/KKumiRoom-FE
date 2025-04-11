@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
 interface InputProps {
+  id?: string;
   value?: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -8,10 +9,11 @@ interface InputProps {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ value, onChange, placeholder, className = '' }, ref) => {
+  ({ id, value, onChange, placeholder, className = '' }, ref) => {
     return (
       <input
         ref={ref}
+        id={id}
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
