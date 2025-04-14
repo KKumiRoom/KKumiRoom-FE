@@ -3,6 +3,7 @@
 import Button from '@/components/atoms/Button';
 import LinkCard from '@/components/molecules/LinkCard';
 import SearchForm from '@/components/molecules/SearchForm';
+import SubjectInfoCard from '@/components/molecules/SubjectInfoCard';
 import TitleInput from '@/components/molecules/TitleInput';
 import DropdownForm from '@/components/organisms/DropdownForm';
 import { useState } from 'react';
@@ -52,6 +53,8 @@ const TestPage = () => {
         href='/'
         className='border border-grey'
       />
+      <SubjectInfoCard title='공통수학 I' type='공통' code='1234567890' />
+      <SubjectInfoCard title='지구과학 I' type='선택' code='1234567890' />
     </div>
   );
 };

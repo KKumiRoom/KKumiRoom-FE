@@ -1,5 +1,9 @@
-const SubjectPage = () => {
-  return <div>SubjectPage</div>;
-};
+export default function SubjectPage({
+  searchParams,
+}: {
+  searchParams: { code: string };
+}) {
+  const { code } = searchParams;
 
-export default SubjectPage;
+  return <div>과목 코드: {code}</div>;
+}

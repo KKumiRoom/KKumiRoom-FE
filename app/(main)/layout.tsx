@@ -5,7 +5,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <AppHeader showBackButton={false} />
-      <div className='pt-[4.5rem]'>{children}</div>
+      <div className='pt-[4.5rem] pb-16'>{children}</div>
       <AppNavBar />
     </div>
   );
