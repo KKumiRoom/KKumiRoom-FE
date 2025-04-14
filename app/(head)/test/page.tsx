@@ -22,7 +22,18 @@ const TestPage = () => {
         title='드롭다운'
         value={value}
         onChange={setValue}
-        options={['옵션1', '옵션2', '옵션3', '옵션4', '옵션5', '옵션6', '옵션7', '옵션8', '옵션9', '옵션10']}
+        options={[
+          '옵션1',
+          '옵션2',
+          '옵션3',
+          '옵션4',
+          '옵션5',
+          '옵션6',
+          '옵션7',
+          '옵션8',
+          '옵션9',
+          '옵션10',
+        ]}
       />
       <Button fullWidth size='lg' variant='primary'>
         버튼

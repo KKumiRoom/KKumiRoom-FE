@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import LinkCard from '@/components/molecules/LinkCard';
+import type { Meta, StoryObj } from '@storybook/react';
 import { FaQuestion, FaBook } from 'react-icons/fa6';
 
 const meta = {
@@ -48,4 +48,4 @@ export const WithCustonClass: Story = {
     href: '/library/firefighter',
     className: 'bg-[#D2DAE0]',
   },
-}; 
+};
