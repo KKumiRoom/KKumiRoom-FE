@@ -1,21 +1,33 @@
 import { forwardRef, KeyboardEvent } from 'react';
 
-interface InputProps {
+export interface InputProps {
   id?: string;
   value?: string;
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  type?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ id, value, onChange, placeholder, className = '', onKeyDown }, ref) => {
+  (
+    {
+      id,
+      value,
+      onChange,
+      placeholder,
+      className = '',
+      onKeyDown,
+      type = 'text',
+    },
+    ref
+  ) => {
     return (
       <input
         ref={ref}
         id={id}
-        type='text'
+        type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={onKeyDown}

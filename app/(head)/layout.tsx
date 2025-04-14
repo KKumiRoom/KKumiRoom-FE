@@ -3,7 +3,7 @@ import AppNavBar from '@/components/containers/AppNavBar';
 
 const HeadLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className='min-h-screen w-[90%] mx-auto'>
       <AppHeader />
       <div className='pt-[4.5rem] pb-16'>{children}</div>
       <AppNavBar />

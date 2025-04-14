@@ -3,6 +3,7 @@ import Input from '@/components/atoms/Input';
 interface TitleInputProps {
   title: string;
   value?: string;
+  type?: string;
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
@@ -11,6 +12,7 @@ interface TitleInputProps {
 const TitleInput = ({
   title,
   value,
+  type = 'text',
   onChange,
   placeholder,
   className = '',
@@ -24,7 +26,8 @@ const TitleInput = ({
       </label>
       <Input
         id={inputId}
-        value={value}
+        value={value}   
+        type={type}
         onChange={onChange}
         placeholder={placeholder}
         className='w-full px-2 py-1 border-b focus:outline-none'

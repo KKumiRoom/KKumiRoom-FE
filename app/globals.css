@@ -10,6 +10,7 @@
   --cloud: #fdfdfd;
   --card: #d3ebcd;
   --grey: #aaaaaa;
+  --mint : #AEDBCE;
   --device-width: 390px;
   --device-height: 844px;
   --outer-background: #ffffff;
@@ -24,6 +25,7 @@
   --color-cloud: var(--cloud);
   --color-card: var(--card);
   --color-grey: var(--grey);
+  --color-mint: var(--mint);
   --font-pretendard:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
