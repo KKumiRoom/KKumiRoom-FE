@@ -1,23 +1,26 @@
 import SearchForm from '@/components/molecules/SearchForm';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
-const SearchFormWithState = () => {
-  const [value, setValue] = useState('');
+const SearchFormWithState = ({
+  initialValue = '',
+  placeholder = '검색어를 입력하세요',
+}) => {
+  const [value, setValue] = useState(initialValue);
 
   return (
     <SearchForm
       value={value}
       onChange={setValue}
-      onSearch={() => {}}
-      placeholder='검색어를 입력하세요'
+      onSearch={() => console.log('Searching for:', value)}
+      placeholder={placeholder}
     />
   );
 };
 
 const meta = {
   title: 'Molecules/SearchForm',
-  component: SearchFormWithState,
+  component: SearchForm,
   parameters: {
     layout: 'centered',
   },
@@ -29,15 +32,17 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof SearchFormWithState>;
+} satisfies Meta<typeof SearchForm>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryFn<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = () => <SearchFormWithState />;
 
-export const WithPlaceholder: Story = {
-  args: {
-    placeholder: '과목명을 입력하세요',
-  },
-};
+export const WithValue: Story = () => (
+  <SearchFormWithState initialValue='React' />
+);
+
+export const CustomPlaceholder: Story = () => (
+  <SearchFormWithState placeholder='과목명을 입력하세요' />
+);

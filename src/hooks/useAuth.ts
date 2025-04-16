@@ -1,7 +1,12 @@
-export function useAuth() {
+function useAuth() {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const login = (id: string, password: string) => {
-    console.log(id, password);
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
+    return { success: true };
   };
 
   return { login };
 }
+
+export default useAuth;

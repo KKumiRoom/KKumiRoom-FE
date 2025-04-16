@@ -7,6 +7,7 @@ interface TitleInputWithButtonProps {
   onChange: (value: string) => void;
   placeholder?: string;
   button: ReactNode;
+  disabled?: boolean;
   className?: string;
   children?: ReactNode;
 }
@@ -17,6 +18,7 @@ const TitleInputWithButton = ({
   onChange,
   placeholder,
   button,
+  disabled = false,
   className = '',
   children,
 }: TitleInputWithButtonProps) => {
@@ -35,6 +37,7 @@ const TitleInputWithButton = ({
             onChange={onChange}
             placeholder={placeholder}
             className='w-full px-2 py-1'
+            disabled={disabled}
           />
           {button}
         </div>

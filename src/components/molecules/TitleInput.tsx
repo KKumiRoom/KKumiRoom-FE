@@ -26,7 +26,7 @@ const TitleInput = ({
       </label>
       <Input
         id={inputId}
-        value={value}   
+        value={value}
         type={type}
         onChange={onChange}
         placeholder={placeholder}

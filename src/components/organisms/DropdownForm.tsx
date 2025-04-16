@@ -11,6 +11,7 @@ interface DropdownFormProps {
   placeholder?: string;
   options: string[];
   className?: string;
+  disabled?: boolean;
 }
 
 const DropdownForm = ({
@@ -20,6 +21,7 @@ const DropdownForm = ({
   placeholder,
   options,
   className = '',
+  disabled = false,
 }: DropdownFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,8 +43,10 @@ const DropdownForm = ({
   }, []);
 
   const toggleDropdown = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
+    if (!disabled) {
+      setIsOpen((prev) => !prev);
+    }
+  }, [disabled]);
 
   const handleSelect = useCallback(
     (option: string) => {
@@ -65,10 +69,13 @@ const DropdownForm = ({
         onChange={onChange}
         placeholder={placeholder}
         className={className}
+        disabled
         button={
           <IconButton
             onClick={toggleDropdown}
             size='md'
+            disabled={disabled}
+            type='button'
             className={`mr-2 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
             aria-label='드롭다운 토글'
           >

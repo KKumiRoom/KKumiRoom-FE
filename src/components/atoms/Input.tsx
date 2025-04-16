@@ -8,6 +8,7 @@ export interface InputProps {
   className?: string;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   type?: string;
+  disabled?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -20,6 +21,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       className = '',
       onKeyDown,
       type = 'text',
+      disabled = false,
     },
     ref
   ) => {
@@ -32,6 +34,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={onKeyDown}
         placeholder={placeholder}
+        disabled={disabled}
         className={`w-full px-2 py-1 focus:outline-none ${className}`}
       />
     );

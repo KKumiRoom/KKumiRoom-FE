@@ -2,7 +2,12 @@ import { twMerge } from 'tailwind-merge';
 import React from 'react';
 
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'fit';
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'ghost';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'ghost'
+  | 'gray';
 export type ButtonType = 'button' | 'submit' | 'reset';
 
 export interface ButtonProps
@@ -23,6 +28,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-cloud hover:bg-primary/90',
   secondary: 'bg-secondary text-cloud hover:bg-secondary/90',
   tertiary: 'bg-tertiary text-cloud hover:bg-tertiary/90',
+  gray: 'bg-grey text-cloud hover:bg-grey/90',
   ghost: 'bg-transparent text-foreground',
 };
 
