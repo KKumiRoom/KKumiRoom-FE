@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation';
 
 interface AppHeaderProps {
   showBackButton?: boolean;
+  showUserButton?: boolean;
 }
 
-const AppHeader = ({ showBackButton = true }: AppHeaderProps) => {
+const AppHeader = ({ showBackButton = true, showUserButton = true }: AppHeaderProps) => {
   const router = useRouter();
 
   return (
@@ -22,11 +23,15 @@ const AppHeader = ({ showBackButton = true }: AppHeaderProps) => {
             }
           : undefined
       }
-      rightButton={{
-        icon: <FaRegCircleUser />,
-        label: '내정보',
-        onClick: () => router.push('/profile'),
-      }}
+      rightButton={
+        showUserButton
+          ? {
+              icon: <FaRegCircleUser />,
+              label: '내정보',
+              onClick: () => router.push('/profile'),
+            }
+          : undefined
+      }
     />
   );
 };
