@@ -14,7 +14,7 @@ const ProfilePage = () => {
   return (
     <div className='flex flex-col gap-4 py-3'>
       <ProfileCard {...profileInfo} />
-      {profileInfo.major == '' ? (
+      {profileInfo.major === '' ? (
         <LinkCard
           image='/images/cardImage/think.png'
           title='나의 진로 찾기'

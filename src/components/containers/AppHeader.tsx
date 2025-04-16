@@ -9,7 +9,10 @@ interface AppHeaderProps {
   showUserButton?: boolean;
 }
 
-const AppHeader = ({ showBackButton = true, showUserButton = true }: AppHeaderProps) => {
+const AppHeader = ({
+  showBackButton = true,
+  showUserButton = true,
+}: AppHeaderProps) => {
   const router = useRouter();
 
   return (
