@@ -9,7 +9,7 @@ interface TimetableHeaderProps {
 const TimetableHeader = ({ days }: TimetableHeaderProps) => {
   return (
     <>
-      <div className='bg-grey/10 flex items-center justify-center h-12 border-r border-b border-grey'></div>
+      <div className='bg-grey/10 flex items-center justify-center h-12 border-r border-b border-grey' />
 
       {days.map((day, dayIndex) => (
         <div

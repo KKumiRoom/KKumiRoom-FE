@@ -1,6 +1,6 @@
 'use client';
 
-import { useTimetable } from '@/hooks/useTimetable';
+import useTimetable from '@/hooks/useTimetable';
 import { TimetableData } from '@/types/timetable';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
@@ -32,6 +32,7 @@ const Timetable = ({
     if (selectedSubject && onDeleteSubject) {
       onDeleteSubject(selectedSubject.day, selectedSubject.period);
     }
+    clearSelectedSubject();
   };
 
   return (
@@ -66,7 +67,7 @@ const Timetable = ({
           subject={selectedSubject.subject}
           day={selectedSubject.day}
           period={selectedSubject.period}
-          isOpen={true}
+          isOpen
           onClose={clearSelectedSubject}
           onDelete={onDeleteSubject ? handleDelete : undefined}
         />

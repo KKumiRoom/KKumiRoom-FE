@@ -11,14 +11,20 @@ interface SelectedSubject {
 
 /**
  * 시간표 관련 로직을 처리하는 훅
+ *
+ * @param data 시간표 데이터
+ * @returns 선택된 과목 상태와 관련 함수들
  */
-export function useTimetable(data: TimetableData) {
-  // 선택된 과목 정보
+function useTimetable(data: TimetableData) {
+  // 선택된 과목 정보 상태
   const [selectedSubject, setSelectedSubject] =
     useState<SelectedSubject | null>(null);
 
   /**
-   * 셀 클릭 시 처리
+   * 시간표 셀 클릭 시 해당 과목 선택
+   *
+   * @param day 요일
+   * @param period 교시
    */
   const selectSubject = (day: string, period: number) => {
     const subject = data[day]?.[period.toString()];
@@ -40,3 +46,5 @@ export function useTimetable(data: TimetableData) {
     clearSelectedSubject,
   };
 }
+
+export default useTimetable;

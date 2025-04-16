@@ -29,7 +29,7 @@ const Modal = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -85,7 +85,7 @@ const Modal = ({
           <div
             className={clsx(
               headerClassName,
-              'p-4 flex items-center justify-between bg-grey/10'
+              'p-4 flex items-center justify-between'
             )}
           >
             <h2 id='modal-title' className='text-xl font-bold'>

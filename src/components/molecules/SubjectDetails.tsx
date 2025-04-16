@@ -4,11 +4,9 @@ import { TimetableSubject } from '@/types/timetable';
 
 interface SubjectDetailsProps {
   subject: TimetableSubject;
-  day: string;
-  period: number;
 }
 
-const SubjectDetails = ({ subject, day, period }: SubjectDetailsProps) => {
+const SubjectDetails = ({ subject }: SubjectDetailsProps) => {
   return (
     <div className='space-y-4'>
       <div>
