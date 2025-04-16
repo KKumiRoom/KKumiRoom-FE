@@ -6,8 +6,8 @@ import {
   errorMessageAtom,
 } from '@/atoms/register/registerForm';
 import { useFormValidationEffect } from '@/atoms/register/registerValidationAtoms';
-import FormNavigation from '@/components/register/FormNavigation';
-import RegisterStepIndicator from '@/components/register/RegisterStepIndicator';
+import FormNavigation from '@/components/containers/FormNavigation';
+import RegisterStepIndicator from '@/components/organisms/RegisterStepIndicator';
 import { useAtom, useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';

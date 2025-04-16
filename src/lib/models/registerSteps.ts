@@ -10,9 +10,9 @@ import {
   schoolAtom,
   gradeAtom,
 } from '@/atoms/register/registerForm';
-import RegisterAuth from '@/components/register/RegisterAuth';
-import RegisterSchoolInfo from '@/components/register/RegisterSchoolInfo';
-import RegisterUserInfo from '@/components/register/RegisterUserInfo';
+import RegisterAuth from '@/components/molecules/RegisterAuth';
+import RegisterSchoolInfo from '@/components/molecules/RegisterSchoolInfo';
+import RegisterUserInfo from '@/components/molecules/RegisterUserInfo';
 import { Atom } from 'jotai';
 import {
   validateStep1,
