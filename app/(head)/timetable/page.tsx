@@ -1,21 +1,41 @@
-import Timetable from '@/components/molecules/Timetable';
+import Timetable from '@/components/organisms/Timetable';
+import { TimetableData } from '@/types/timetable';
 
-const data = {
+const data: TimetableData = {
   월: {
-    '1': { name: '공통국어I', color: 'bg-red-100' },
-    '2': { name: '공통수학I', color: 'bg-blue-100' },
-    '3': { name: '공통사회I', color: 'bg-green-100' },
-    '4': { name: '공통과학I', color: 'bg-yellow-100' },
-    '5': { name: '공통영어I', color: 'bg-purple-100' },
-    '6': { name: '공통영어II', color: 'bg-orange-100' },
-    '7': { name: '공통영어III', color: 'bg-pink-100' },
-    '8': { name: '공통영어IV', color: 'bg-brown-100' },
+    '1': {
+      name: '공통국어I',
+      color: 'bg-red-100',
+      type: '공통',
+      teacher: '김철수',
+      semester: '3학년 1학기',
+      department: '일반',
+      description: '공통국어I 설명',
+    },
+    '2': {
+      name: '공통수학I',
+      color: 'bg-blue-100',
+      type: '공통',
+      teacher: '이영희',
+      semester: '3학년 1학기',
+      department: '일반',
+      description: '공통수학I 설명',
+    },
+    '3': {
+      name: '지구과학I',
+      color: 'bg-green-100',
+      type: '선택',
+      teacher: '박영수',
+      semester: '3학년 1학기',
+      department: '일반',
+      description: '지구과학I 설명',
+    },
   },
 };
 const schoolInfo = {
   name: '대인고등학교',
-  grade: '1학년',
-  class: '1반',
+  grade: '3학년',
+  class: '8반',
 };
 
 const TimetablePage = () => {
