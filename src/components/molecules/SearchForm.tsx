@@ -1,4 +1,7 @@
+'use client';
+
 import { IoMdSearch } from 'react-icons/io';
+import React, { useCallback } from 'react';
 import Input from '../atoms/Input';
 import IconButton from './IconButton';
 
@@ -17,18 +20,28 @@ const SearchForm = ({
   placeholder = '검색어를 입력하세요',
   className = '',
 }: SearchFormProps) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && onSearch) {
-      e.preventDefault();
-      onSearch();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && onSearch) {
+        e.preventDefault();
+        onSearch();
+      }
+    },
+    [onSearch]
+  );
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (onSearch) {
       onSearch();
     }
-  };
+  }, [onSearch]);
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      onChange(newValue);
+    },
+    [onChange]
+  );
 
   return (
     <div
@@ -38,7 +51,7 @@ const SearchForm = ({
     >
       <Input
         placeholder={placeholder}
-        onChange={onChange}
+        onChange={handleChange}
         value={value}
         className='text-sm'
         onKeyDown={handleKeyDown}
@@ -56,4 +69,5 @@ const SearchForm = ({
   );
 };
 
-export default SearchForm;
+// React.memo를 사용하여 불필요한 리렌더링 방지
+export default React.memo(SearchForm);

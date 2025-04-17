@@ -28,7 +28,7 @@ export default function SubjectInfoCard({
         <p className='text-sm'>{`${type}과목`}</p>
       </div>
 
-      <Link href={`/subject?code=${code}`}>
+      <Link href={`/subject/${code}`}>
         <Button
           variant={buttonVariant}
           className='flex items-center rounded-full mr-4'
