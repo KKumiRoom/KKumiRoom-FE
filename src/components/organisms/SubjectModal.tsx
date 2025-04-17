@@ -8,8 +8,6 @@ import SubjectDetails from '../molecules/SubjectDetails';
 
 interface SubjectModalProps {
   subject: TimetableSubject;
-  day: string;
-  period: number;
   isOpen: boolean;
   onClose: () => void;
   onDelete?: () => void;
@@ -17,8 +15,6 @@ interface SubjectModalProps {
 
 const SubjectModal = ({
   subject,
-  day,
-  period,
   isOpen,
   onClose,
   onDelete,
@@ -66,7 +62,7 @@ const SubjectModal = ({
       footer={modalFooter}
       size='lg'
     >
-      <SubjectDetails subject={subject} day={day} period={period} />
+      <SubjectDetails subject={subject} />
     </Modal>
   );
 };

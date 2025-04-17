@@ -9,6 +9,7 @@ import {
   schoolRegionAtom,
   schoolAtom,
   gradeAtom,
+  classNumberAtom,
 } from '@/atoms/register/registerForm';
 import RegisterAuth from '@/components/molecules/RegisterAuth';
 import RegisterSchoolInfo from '@/components/molecules/RegisterSchoolInfo';
@@ -54,10 +55,10 @@ export const STEP_ATOMS: Record<number, StepAtomsConfig> = {
     validate: validateStep2,
   },
   3: {
-    atoms: [schoolRegionAtom, schoolAtom, gradeAtom],
+    atoms: [schoolRegionAtom, schoolAtom, gradeAtom, classNumberAtom],
     component: RegisterSchoolInfo,
     title: '학교 정보',
-    description: '학교 지역, 학교 이름, 학년을 입력해주세요',
+    description: '학교 지역, 학교 이름, 학년, 반을 입력해주세요',
     validate: validateStep3,
   },
 };

@@ -30,6 +30,7 @@ export const step3DataAtom = atom((get) => {
     schoolRegion: get(atoms[0]),
     school: get(atoms[1]),
     grade: get(atoms[2]),
+    classNumber: get(atoms[3]),
   };
 });
 
@@ -68,12 +69,6 @@ export function useFormValidationEffect() {
 // 현재 유효성 검사 결과만 반환하는 훅
 export function useValidationResult() {
   return useAtomValue(currentValidationResultAtom);
-}
-
-// 이전 버전과의 호환성을 위한 훅
-export function useFormValidation() {
-  useFormValidationEffect();
-  return useValidationResult();
 }
 
 // 특정 필드의 유효성 검사 규칙을 적용하는 통합 커스텀 훅

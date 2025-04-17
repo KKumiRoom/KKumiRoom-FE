@@ -2,6 +2,7 @@ import {
   schoolAtom,
   schoolRegionAtom,
   gradeAtom,
+  classNumberAtom,
 } from '@/atoms/register/registerForm';
 import DropdownForm from '@/components/organisms/DropdownForm';
 import {
@@ -10,17 +11,20 @@ import {
   GRADES,
 } from '@/constants/schoolData';
 import useRegisterField from '@/hooks/useRegisterField';
+import TitleInput from './TitleInput';
 
 function RegisterSchoolInfo() {
   const [schoolRegion, setSchoolRegion] = useRegisterField(schoolRegionAtom);
   const [school, setSchool] = useRegisterField(schoolAtom);
   const [grade, setGrade] = useRegisterField(gradeAtom);
+  const [classNumber, setClassNumber] = useRegisterField(classNumberAtom);
 
   // 지역이 변경될 때 학교 초기화
   const handleRegionChange = (value: string) => {
     setSchoolRegion(value);
-    setSchool(''); // 지역이 바뀌면 학교 선택 초기화
-    setGrade(''); // 지역이 바뀌면 학년 선택 초기화
+    setSchool('');
+    setGrade('');
+    setClassNumber('');
   };
 
   // 현재 선택된 지역의 학교 목록
@@ -50,6 +54,14 @@ function RegisterSchoolInfo() {
         value={grade}
         onChange={setGrade}
         options={GRADES}
+        disabled={!school}
+      />
+
+      <TitleInput
+        title='반'
+        value={classNumber}
+        onChange={setClassNumber}
+        placeholder='반을 입력해주세요'
         disabled={!school}
       />
     </div>

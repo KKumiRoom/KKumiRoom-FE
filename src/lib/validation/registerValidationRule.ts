@@ -94,10 +94,12 @@ export function validateStep2(
 }
 
 // 3단계 - 학교 정보 유효성 검사
+const MAX_CLASS_NUMBER = 10;
 export function validateStep3(
   schoolRegion: string,
   school: string,
-  grade: string
+  grade: string,
+  classNumber: string
 ): string {
   const schoolRegionValidation = validateField(schoolRegion, [
     { condition: (v: string) => !v, message: '학교 지역을 선택해주세요.' },
@@ -111,9 +113,18 @@ export function validateStep3(
     { condition: (v: string) => !v, message: '학년을 선택해주세요.' },
   ]);
 
+  const classNumberValidation = validateField(classNumber, [
+    { condition: (v: string) => !v, message: '반을 입력해주세요.' },
+    {
+      condition: (v: string) => +v > MAX_CLASS_NUMBER,
+      message: `반은 최대 ${MAX_CLASS_NUMBER}반 입니다.`,
+    },
+  ]);
+
   return combineValidations(
     schoolRegionValidation,
     schoolValidation,
-    gradeValidation
+    gradeValidation,
+    classNumberValidation
   );
 }

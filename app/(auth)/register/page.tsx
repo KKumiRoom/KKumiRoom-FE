@@ -24,7 +24,6 @@ function RegisterPage() {
     initForm();
   }, [initForm]);
 
-  // 로그인 페이지로 이동
   const goToLogin = () => {
     router.push('/login');
   };

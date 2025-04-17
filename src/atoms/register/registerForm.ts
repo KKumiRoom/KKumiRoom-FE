@@ -16,6 +16,7 @@ export const addressAtom = atom<string>('');
 export const schoolRegionAtom = atom<string>('');
 export const schoolAtom = atom<string>('');
 export const gradeAtom = atom<string>('');
+export const classNumberAtom = atom<string>('');
 
 // UI 상태 atoms
 export const currentStepAtom = atom<number>(1);

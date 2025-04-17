@@ -12,6 +12,7 @@ import {
   gradeAtom,
   errorMessageAtom,
   currentStepAtom,
+  classNumberAtom,
 } from './registerForm';
 
 // 폼 데이터 초기화 액션
@@ -26,12 +27,10 @@ export const initializeFormAtom = atom(null, (get, set) => {
   set(schoolRegionAtom, '');
   set(schoolAtom, '');
   set(gradeAtom, '');
+  set(classNumberAtom, '');
   set(errorMessageAtom, '');
   set(currentStepAtom, 1); // 첫 번째 단계로 초기화
 });
-
-// 이전 이름과의 호환성 유지
-export const initialFormData = initializeFormAtom;
 
 // 폼 제출 액션
 export const submitFormAtom = atom(null, async (get, set) => {
@@ -47,6 +46,7 @@ export const submitFormAtom = atom(null, async (get, set) => {
     schoolRegion: get(schoolRegionAtom),
     school: get(schoolAtom),
     grade: get(gradeAtom),
+    classNumber: get(classNumberAtom),
   };
   /* eslint-enable @typescript-eslint/no-unused-vars */
 

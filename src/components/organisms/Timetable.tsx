@@ -65,8 +65,6 @@ const Timetable = ({
       {selectedSubject && (
         <SubjectModal
           subject={selectedSubject.subject}
-          day={selectedSubject.day}
-          period={selectedSubject.period}
           isOpen
           onClose={clearSelectedSubject}
           onDelete={onDeleteSubject ? handleDelete : undefined}

@@ -7,6 +7,7 @@ interface TitleInputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 const TitleInput = ({
@@ -15,6 +16,7 @@ const TitleInput = ({
   type = 'text',
   onChange,
   placeholder,
+  disabled = false,
   className = '',
 }: TitleInputProps) => {
   const inputId = `${title.replace(/\s+/g, '-').toLowerCase()}-input`;
@@ -30,6 +32,7 @@ const TitleInput = ({
         type={type}
         onChange={onChange}
         placeholder={placeholder}
+        disabled={disabled}
         className='w-full px-2 py-1 border-b focus:outline-none'
       />
     </div>
