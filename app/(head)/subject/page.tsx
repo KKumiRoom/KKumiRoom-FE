@@ -19,7 +19,7 @@ export default function SubjectPage() {
     handleSearchSubmit,
   } = useSubjectSearch<Subject>({
     initialData,
-    searchKeys: ['title', 'code'],
+    searchKeys: ['name', 'code'],
   });
 
   const {

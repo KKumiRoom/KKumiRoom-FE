@@ -1,3 +1,5 @@
+import { Subject } from './subject';
+
 /**
  * 과목 유형
  */
@@ -6,7 +8,7 @@ export type SubjectType = '공통' | '선택';
 /**
  * 시간표 과목 정보
  */
-export interface TimetableSubject {
+export interface TimetableSubject extends Subject {
   /**
    * 과목 이름
    */
@@ -25,22 +27,22 @@ export interface TimetableSubject {
   /**
    * 담당 교사
    */
-  teacher?: string;
+  teacher: string;
 
   /**
    * 학기 정보
    */
-  semester?: string;
+  semester: string;
 
   /**
    * 학과/계열 정보
    */
-  department?: string;
+  department: string;
 
   /**
    * 과목 설명
    */
-  description?: string;
+  description: string;
 }
 
 /**

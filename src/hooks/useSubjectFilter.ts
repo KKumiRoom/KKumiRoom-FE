@@ -5,8 +5,8 @@ import { useState, useCallback, useMemo } from 'react';
 export type SortType = '가나다순' | '학년순';
 export type FilterType = '전체' | '공통' | '선택';
 
-interface TitleField {
-  title: string;
+interface NameField {
+  name: string;
 }
 
 interface UseSubjectFilterProps<T> {
@@ -23,7 +23,7 @@ interface UseSubjectFilterReturn<T> {
   resetFilters: () => void;
 }
 
-function useSubjectFilter<T extends TitleField>({
+function useSubjectFilter<T extends NameField>({
   data,
   filterKey,
 }: UseSubjectFilterProps<T>): UseSubjectFilterReturn<T> {
@@ -39,12 +39,12 @@ function useSubjectFilter<T extends TitleField>({
 
     if (sortType === '가나다순') {
       result.sort((a, b) => {
-        return String(a.title).localeCompare(String(b.title));
+        return String(a.name).localeCompare(String(b.name));
       });
     } else if (sortType === '학년순') {
       result.sort((a, b) => {
-        const gradeA = String(a.title).match(/\d+/)?.[0] || '0';
-        const gradeB = String(b.title).match(/\d+/)?.[0] || '0';
+        const gradeA = String(a.name).match(/\d+/)?.[0] || '0';
+        const gradeB = String(b.name).match(/\d+/)?.[0] || '0';
         return Number(gradeB) - Number(gradeA);
       });
     }

@@ -13,7 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className='device-container'>{children}</body>
+      <body>
+        <div className='device-container'>{children}</div>
+      </body>
     </html>
   );
 }

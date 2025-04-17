@@ -2,7 +2,7 @@
 
 import Header from '@/components/organisms/Header';
 import { FaAngleLeft, FaRegCircleUser } from 'react-icons/fa6';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface AppHeaderProps {
   showBackButton?: boolean;
@@ -14,6 +14,8 @@ const AppHeader = ({
   showUserButton = true,
 }: AppHeaderProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const isSubjectPage = /^\/subject\/[^\/]+$/.test(pathname);
 
   return (
     <Header
@@ -35,6 +37,7 @@ const AppHeader = ({
             }
           : undefined
       }
+      transparent={isSubjectPage}
     />
   );
 };

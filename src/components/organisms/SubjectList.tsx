@@ -35,7 +35,7 @@ const SubjectList = ({ subjects, isLoading }: SubjectListProps) => {
       {subjects.map((subject) => (
         <SubjectInfoCard
           key={subject.code}
-          title={subject.title}
+          title={subject.name}
           type={subject.type}
           code={subject.code}
         />

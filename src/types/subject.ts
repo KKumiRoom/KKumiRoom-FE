@@ -14,7 +14,7 @@ export interface Subject {
   /**
    * 과목명
    */
-  title: string;
+  name: string;
 
   /**
    * 과목 유형 (공통/선택)
@@ -27,6 +27,22 @@ export interface Subject {
   code: string;
 
   /**
-   * 추가적인 과목 정보는 필요에 따라 확장 가능
+   * 담당 교사
    */
+  teacher: string;
+
+  /**
+   * 학기 정보
+   */
+  semester: string;
+
+  /**
+   * 학과/계열 정보
+   */
+  department: string;
+
+  /**
+   * 과목 설명
+   */
+  description: string;
 }

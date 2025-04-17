@@ -15,7 +15,7 @@ const DropdownList = ({
 
   return (
     <ul
-      className='absolute left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg z-10 max-h-[12.5rem] overflow-y-auto'
+      className='absolute left-0 right-0 top-full mt-1 bg-cloud border rounded-lg shadow-lg z-10 max-h-[12.5rem] overflow-y-auto'
       role='listbox'
     >
       {options.map((option) => (
