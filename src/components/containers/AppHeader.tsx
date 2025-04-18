@@ -15,7 +15,7 @@ const AppHeader = ({
 }: AppHeaderProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const isSubjectPage = /^\/subject\/[^\/]+$/.test(pathname);
+  const isSubjectPage = /^\/subject\/[^/]+$/.test(pathname);
 
   return (
     <Header

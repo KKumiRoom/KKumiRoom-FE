@@ -1,3 +1,4 @@
+import SWRProvider from '@/providers/SWRProvider';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body>
-        <div className='device-container'>{children}</div>
+        <SWRProvider>
+          <div className='device-container'>{children}</div>
+        </SWRProvider>
       </body>
     </html>
   );

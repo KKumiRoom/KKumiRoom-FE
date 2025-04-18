@@ -7,35 +7,29 @@ import {
   patchData,
 } from '../lib/utils/api';
 
-/**
- * 기본 데이터 가져오기 훅
- * SWR의 장점을 최대한 활용하는 간결한 구조
- */
-export function useFetch<T = any>(key: string | null) {
-  return useSWR<T>(key, fetcher);
+// 캐시 데이터 타입 정의
+interface CacheEntry<T> {
+  data?: T;
+  error?: Error;
 }
 
 /**
- * 데이터 요청 상태 및 결과를 포함한 확장된 훅
+ * 데이터 요청 훅 - SWR을 간편하게 사용할 수 있도록 래핑
+ * @param url API URL (캐시 키로 사용됨)
  */
-export function useData<T = any>(key: string | null) {
+export function useData<T = unknown>(url: string | null) {
   const { data, error, isLoading, isValidating, mutate } = useSWR<T>(
-    key,
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      dedupingInterval: 2000,
-    }
+    url,
+    fetcher
   );
 
   return {
     data,
-    error,
     isLoading,
     isValidating,
     mutate,
     isError: !!error,
+    error,
   };
 }
 
@@ -44,64 +38,92 @@ export function useData<T = any>(key: string | null) {
  * SWR의 mutate를 활용한 효율적인 캐시 관리
  */
 export function useDataMutation() {
-  const { mutate } = useSWRConfig();
+  const { mutate, cache } = useSWRConfig();
 
   /**
    * 데이터 생성 (POST)
+   * @param url API URL
+   * @param data 요청 데이터
    */
-  const create = async <T = any, R = any>(url: string, data: T) => {
-    const response = await postData<R>(url, data);
+  const create = async <TData = Record<string, unknown>, TResponse = unknown>(
+    url: string,
+    data: TData
+  ) => {
+    const response = await postData<TResponse, TData>(url, data);
+    // URL 기반으로 캐시 갱신
     mutate(url);
     return response;
   };
 
   /**
    * 데이터 수정 (PUT)
+   * @param url API URL
+   * @param data 요청 데이터
    */
-  const update = async <T = any, R = any>(url: string, data: T) => {
-    const response = await putData<R>(url, data);
+  const update = async <TData = Record<string, unknown>, TResponse = unknown>(
+    url: string,
+    data: TData
+  ) => {
+    const response = await putData<TResponse, TData>(url, data);
+    // URL 기반으로 캐시 갱신
     mutate(url);
     return response;
   };
 
   /**
    * 데이터 일부 수정 (PATCH)
+   * @param url API URL
+   * @param data 요청 데이터
    */
-  const patch = async <T = any, R = any>(url: string, data: T) => {
-    const response = await patchData<R>(url, data);
+  const patch = async <TData = Record<string, unknown>, TResponse = unknown>(
+    url: string,
+    data: TData
+  ) => {
+    const response = await patchData<TResponse, TData>(url, data);
+    // URL 기반으로 캐시 갱신
     mutate(url);
     return response;
   };
 
   /**
    * 데이터 삭제 (DELETE)
+   * @param url API URL
    */
-  const remove = async <R = any>(url: string) => {
-    const response = await deleteData<R>(url);
+  const remove = async <TResponse = unknown>(url: string) => {
+    const response = await deleteData<TResponse>(url);
+    // URL 기반으로 캐시 갱신
     mutate(url);
     return response;
   };
 
   /**
    * 낙관적 업데이트 수행 (UI 먼저 업데이트 후 서버 요청)
+   * @param url API URL (캐시 키로 사용됨)
+   * @param updateFn 현재 데이터를 업데이트할 함수
+   * @param dataFetcher 실제 API 요청을 수행할 함수
    */
-  const optimisticUpdate = async <T = any, R = any>(
+  const optimisticUpdate = async <TData = unknown, TResponse = unknown>(
     url: string,
-    updateFn: (currentData: T | undefined) => T,
-    fetcher: () => Promise<R>
+    updateFn: (currentData: TData | undefined) => TData,
+    dataFetcher: () => Promise<TResponse>
   ) => {
     // 현재 캐시된 데이터 가져오기
-    const currentData = (cache.get(url) as any)?.data;
+    const cacheEntry = cache.get(url) as CacheEntry<TData> | undefined;
+    const currentData = cacheEntry?.data;
+
+    // 낙관적 업데이트 (UI 바로 업데이트)
+    mutate(url, updateFn(currentData), false);
 
     try {
-      // 낙관적 업데이트 (UI 바로 업데이트)
-      mutate(url, updateFn(currentData), false);
-      const responseData = await fetcher();
+      // 실제 API 요청 수행
+      const responseData = await dataFetcher();
+      // 성공 시 캐시 갱신
       mutate(url);
       return responseData;
-    } catch (error) {
+    } catch (err) {
+      // 오류 발생 시 원래 데이터로 롤백
       mutate(url, currentData, false);
-      throw error;
+      throw err;
     }
   };
 
@@ -114,6 +136,3 @@ export function useDataMutation() {
     mutate,
   };
 }
-
-// SWR 캐시 객체에 접근
-const cache = useSWRConfig().cache;

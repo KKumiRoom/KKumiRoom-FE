@@ -7,15 +7,13 @@ import Button from '../atoms/Button';
 import TitleInput from '../molecules/TitleInput';
 
 export default function LoginForm() {
-  const { login } = useAuth();
+  const { login, isLoading, error } = useAuth();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(id, password);
-    setId('');
-    setPassword('');
+    await login(id, password);
   };
 
   return (
@@ -36,6 +34,8 @@ export default function LoginForm() {
           value={password}
           onChange={setPassword}
         />
+
+        {error && <div className='mt-2 text-warning text-sm'>{error}</div>}
       </div>
       <div className='flex flex-col gap-4'>
         <Link
@@ -49,7 +49,7 @@ export default function LoginForm() {
           fullWidth
           variant='primary'
           size='lg'
-          disabled={id === '' || password === ''}
+          disabled={id === '' || password === '' || isLoading}
         >
           로그인
         </Button>
