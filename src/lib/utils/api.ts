@@ -1,4 +1,5 @@
 import { createApiError } from '@/providers/SWRProvider';
+import { ErrorToast } from './notifications';
 
 const isServer = () => typeof window === 'undefined';
 
@@ -77,7 +78,7 @@ export const refreshAccessToken = async (): Promise<null> => {
     }
     return null;
   } catch (error) {
-    console.error('Error refreshing token:', error);
+    ErrorToast(`토큰 갱신 중 오류가 발생했습니다: ${error}`);
     if (!isServer()) {
       window.location.href = '/login';
     }

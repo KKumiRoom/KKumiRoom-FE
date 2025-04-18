@@ -2,6 +2,7 @@
 
 import { SWRConfig } from 'swr';
 import { ReactNode } from 'react';
+import { ErrorToast } from '@/lib/utils/notifications';
 
 interface SWRProviderProps {
   children: ReactNode;
@@ -39,24 +40,23 @@ export const globalErrorHandler = (error: Error): void => {
   if (process.env.NODE_ENV === 'development') {
     const apiError = error as ApiError;
 
-    console.error('[API 오류]', error.message);
-
+    ErrorToast(error.message);
     // API 에러에 추가 정보가 있으면 로깅
     if (apiError.status) {
-      console.error('상태 코드:', apiError.status);
+      ErrorToast(`상태 코드: ${apiError.status}`);
     }
 
     if (apiError.info) {
-      console.error('에러 정보:', apiError.info);
+      ErrorToast(`에러 정보: ${JSON.stringify(apiError.info)}`);
     }
 
     // 스택 트레이스 로깅 (개발 환경에서만)
     if (error.stack) {
-      console.error('스택 트레이스:', error.stack);
+      ErrorToast(`스택 트레이스: ${error.stack}`);
     }
   } else {
     // 프로덕션 환경에서는 최소한의 로깅
-    console.error('[API 오류]', error.message);
+    ErrorToast(error.message);
   }
 };
 
