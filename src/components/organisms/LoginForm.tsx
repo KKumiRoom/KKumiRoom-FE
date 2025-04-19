@@ -13,7 +13,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(id, password);
+    await login({ authId: id, password });
   };
 
   return (

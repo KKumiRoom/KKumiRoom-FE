@@ -6,64 +6,6 @@ const isServer = () => typeof window === 'undefined';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 /**
- * 쿠키에서 특정 이름의 값을 가져오는 함수
- */
-export const getCookie = (name: string): string | null => {
-  if (isServer()) return null;
-
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i += 1) {
-    const cookie = cookies[i].trim();
-    if (cookie.startsWith(`${name}=`)) {
-      return cookie.substring(name.length + 1);
-    }
-  }
-  return null;
-};
-
-/**
- * 쿠키에 값을 설정하는 함수
- */
-export const setCookie = (name: string, value: string, days = 7): void => {
-  if (isServer()) return;
-
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = `expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/;SameSite=Strict`;
-};
-
-/**
- * 쿠키에서 값을 삭제하는 함수
- */
-export const removeCookie = (name: string): void => {
-  if (isServer()) return;
-
-  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Strict`;
-};
-
-/**
- * 토큰을 쿠키에서 가져오는 함수
- */
-export const getToken = (): string | null => {
-  return getCookie('accessToken');
-};
-
-/**
- * 토큰을 쿠키에 저장하는 함수
- */
-export const setToken = (token: string): void => {
-  setCookie('accessToken', token);
-};
-
-/**
- * 토큰을 쿠키에서 제거하는 함수
- */
-export const removeToken = (): void => {
-  removeCookie('accessToken');
-};
-
-/**
  * 액세스 토큰 갱신 함수
  */
 export const refreshAccessToken = async (): Promise<null> => {
@@ -78,7 +20,7 @@ export const refreshAccessToken = async (): Promise<null> => {
     }
     return null;
   } catch (error) {
-    ErrorToast(`토큰 갱신 중 오류가 발생했습니다: ${error}`);
+    ErrorToast('토큰 갱신 중 오류가 발생했습니다');
     if (!isServer()) {
       window.location.href = '/login';
     }

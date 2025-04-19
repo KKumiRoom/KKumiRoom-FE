@@ -8,6 +8,7 @@ import {
 import { useFormValidationEffect } from '@/atoms/register/registerValidationAtoms';
 import FormNavigation from '@/components/containers/FormNavigation';
 import RegisterStepIndicator from '@/components/organisms/RegisterStepIndicator';
+import useSchoolData from '@/hooks/useSchoolData';
 import { useAtom, useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -16,10 +17,12 @@ import { MAX_STEP, REGISTER_STEPS } from '@/lib/models/registerSteps';
 function RegisterPage() {
   const [currentStep] = useAtom(currentStepAtom);
   const [, initForm] = useAtom(initializeFormAtom);
-  useFormValidationEffect(); // 에러 메시지 바인딩만 처리
-  const displayErrorMessage = useAtomValue(errorMessageAtom); // 현재 에러 메시지
+  useFormValidationEffect();
+  const displayErrorMessage = useAtomValue(errorMessageAtom);
   const router = useRouter();
 
+  // 페이지 로딩 시 초기화 및 학교 데이터 로드
+  useSchoolData();
   useEffect(() => {
     initForm();
   }, [initForm]);
@@ -53,5 +56,4 @@ function RegisterPage() {
     </div>
   );
 }
-
 export default RegisterPage;

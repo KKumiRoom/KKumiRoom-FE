@@ -5,12 +5,10 @@ import {
   classNumberAtom,
 } from '@/atoms/register/registerForm';
 import DropdownForm from '@/components/organisms/DropdownForm';
-import {
-  SCHOOL_REGIONS,
-  SCHOOLS_BY_REGION,
-  GRADES,
-} from '@/constants/schoolData';
+import { GRADES } from '@/constants/schoolData';
 import useRegisterField from '@/hooks/useRegisterField';
+import { schoolsDataAtom } from '@/hooks/useSchoolData';
+import { useAtomValue } from 'jotai';
 import TitleInput from './TitleInput';
 
 function RegisterSchoolInfo() {
@@ -18,6 +16,9 @@ function RegisterSchoolInfo() {
   const [school, setSchool] = useRegisterField(schoolAtom);
   const [grade, setGrade] = useRegisterField(gradeAtom);
   const [classNumber, setClassNumber] = useRegisterField(classNumberAtom);
+
+  // 학교 데이터 가져오기
+  const schoolsData = useAtomValue(schoolsDataAtom);
 
   // 지역이 변경될 때 학교 초기화
   const handleRegionChange = (value: string) => {
@@ -27,10 +28,12 @@ function RegisterSchoolInfo() {
     setClassNumber('');
   };
 
+  // 지역 목록 (API에서 받아온 데이터 기반)
+  const regionOptions = Object.keys(schoolsData);
+
   // 현재 선택된 지역의 학교 목록
-  const schoolOptions = schoolRegion
-    ? SCHOOLS_BY_REGION[schoolRegion] || []
-    : [];
+  const schoolOptions =
+    schoolRegion && schoolsData[schoolRegion] ? schoolsData[schoolRegion] : [];
 
   return (
     <div className='flex flex-col gap-4'>
@@ -38,7 +41,7 @@ function RegisterSchoolInfo() {
         title='학교 지역'
         value={schoolRegion}
         onChange={handleRegionChange}
-        options={SCHOOL_REGIONS}
+        options={regionOptions}
       />
 
       <DropdownForm
