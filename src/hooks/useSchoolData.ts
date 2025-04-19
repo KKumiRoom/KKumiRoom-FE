@@ -10,42 +10,38 @@ export function useSchoolData() {
 
   useEffect(() => {
     const fetchSchools = async () => {
-      try {
-        const response = await fetch('/api/schools', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+      const response = await fetch('/api/schools', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (response.ok) {
-          const result = await response.json();
+      if (response.ok) {
+        const result = await response.json();
 
-          if (result.data) {
-            // API 응답에서 학교 데이터를 지역별로 구조화
-            const schoolsByRegion: Record<string, string[]> = {};
+        if (result.data) {
+          // API 응답에서 학교 데이터를 지역별로 구조화
+          const schoolsByRegion: Record<string, string[]> = {};
 
-            result.data.forEach(
-              (school: { schoolName: string; eduId: number }) => {
-                // eduId를 기반으로 지역 찾기
-                const educationOffice = EDUCATION_OFFICES.find(
-                  (office) => office.code === `${school.eduId}`
-                );
-                const region = educationOffice?.region || '기타';
+          result.data.forEach(
+            (school: { schoolName: string; eduId: number }) => {
+              // eduId를 기반으로 지역 찾기
+              const educationOffice = EDUCATION_OFFICES.find(
+                (office) => office.code === `${school.eduId}`
+              );
+              const region = educationOffice?.region || '기타';
 
-                if (!schoolsByRegion[region]) {
-                  schoolsByRegion[region] = [];
-                }
-
-                schoolsByRegion[region].push(school.schoolName);
+              if (!schoolsByRegion[region]) {
+                schoolsByRegion[region] = [];
               }
-            );
 
-            setSchoolsData(schoolsByRegion);
-          }
+              schoolsByRegion[region].push(school.schoolName);
+            }
+          );
+
+          setSchoolsData(schoolsByRegion);
         }
-      } catch (error) {
-        console.error('학교 정보 로드 중 오류 발생:', error);
       }
     };
 
@@ -57,5 +53,3 @@ export function useSchoolData() {
 
   return { schoolsData };
 }
-
-export default useSchoolData;

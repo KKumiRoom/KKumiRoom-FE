@@ -11,7 +11,7 @@ import { useDataMutation } from './useFetch';
  */
 function useAuth() {
   const router = useRouter();
-  const { create, remove } = useDataMutation();
+  const { create } = useDataMutation();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,7 +64,10 @@ function useAuth() {
 
     try {
       // POST 요청으로 로그아웃 API 호출
-      const response = await create<{}, ApiResponse>('/api/auth/sign-out', {});
+      const response = await create<Record<string, never>, ApiResponse>(
+        '/api/auth/sign-out',
+        {}
+      );
 
       // 성공적인 응답 처리
       if (response && response.code === 200) {

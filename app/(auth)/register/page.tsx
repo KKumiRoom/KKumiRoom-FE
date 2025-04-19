@@ -8,7 +8,7 @@ import {
 import { useFormValidationEffect } from '@/atoms/register/registerValidationAtoms';
 import FormNavigation from '@/components/containers/FormNavigation';
 import RegisterStepIndicator from '@/components/organisms/RegisterStepIndicator';
-import useSchoolData from '@/hooks/useSchoolData';
+import { useSchoolData } from '@/hooks/useSchoolData';
 import { useAtom, useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';

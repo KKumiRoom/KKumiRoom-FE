@@ -20,7 +20,7 @@ export const refreshAccessToken = async (): Promise<null> => {
     }
     return null;
   } catch (error) {
-    ErrorToast('토큰 갱신 중 오류가 발생했습니다');
+    ErrorToast(`토큰 갱신 중 오류가 발생했습니다 : ${error}`);
     if (!isServer()) {
       window.location.href = '/login';
     }

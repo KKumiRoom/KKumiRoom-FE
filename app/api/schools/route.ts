@@ -4,29 +4,25 @@ import { TSchoolList } from '@/types/data/TSchoolList';
 import { NextResponse } from 'next/server';
 
 async function fetchSchoolsData() {
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-    const response = await fetch(`${apiUrl}/api/schools`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      signal: AbortSignal.timeout(60000),
-      cache: 'no-store',
-    });
+  const response = await fetch(`${apiUrl}/api/schools`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    signal: AbortSignal.timeout(60000),
+    cache: 'no-store',
+  });
 
-    if (!response.ok) {
-      throw new Error(
-        `백엔드 API 호출 실패: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const data: ApiResponse<TSchoolList> = await response.json();
-    return data.data || [];
-  } catch (error) {
-    throw error;
+  if (!response.ok) {
+    throw new Error(
+      `백엔드 API 호출 실패: ${response.status} ${response.statusText}`
+    );
   }
+
+  const data: ApiResponse<TSchoolList> = await response.json();
+  return data.data || [];
 }
 
 const cacheDuration = 2592000; // 30일
