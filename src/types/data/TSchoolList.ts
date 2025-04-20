@@ -1,4 +1,4 @@
-type SchoolInfo = {
+export type SchoolInfo = {
   schoolId: number;
   schoolName: string;
   eduId: number;

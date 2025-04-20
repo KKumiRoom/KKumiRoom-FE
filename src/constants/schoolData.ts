@@ -22,7 +22,11 @@ export const EDUCATION_OFFICES = [
 ];
 
 // 학년 리스트
-export const GRADES = ['1학년', '2학년', '3학년'];
+export const GRADES = [
+  { id: 1, name: '1학년' },
+  { id: 2, name: '2학년' },
+  { id: 3, name: '3학년' },
+];
 
 // 과목 데이터
 export const SUBJECTS: Subject[] = [

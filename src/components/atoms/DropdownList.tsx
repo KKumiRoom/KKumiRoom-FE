@@ -1,8 +1,13 @@
+interface Option {
+  id: number;
+  name: string;
+}
+
 interface DropdownListProps {
-  options: string[];
-  onSelect: (option: string) => void;
+  options: Option[];
+  onSelect: (option: Option) => void;
   isOpen: boolean;
-  selectedOption?: string;
+  selectedOption?: number;
 }
 
 const DropdownList = ({
@@ -20,7 +25,7 @@ const DropdownList = ({
     >
       {options.map((option) => (
         <li
-          key={option}
+          key={option.id}
           onClick={() => onSelect(option)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -30,9 +35,9 @@ const DropdownList = ({
           className='px-4 py-2 hover:bg-gray-100 cursor-pointer first:rounded-t-lg last:rounded-b-lg'
           role='option'
           tabIndex={0}
-          aria-selected={selectedOption === option}
+          aria-selected={selectedOption === option.id}
         >
-          {option}
+          {option.name}
         </li>
       ))}
     </ul>

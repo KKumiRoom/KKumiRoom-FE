@@ -1,16 +1,17 @@
 import { EDUCATION_OFFICES } from '@/constants/schoolData';
+import { SchoolInfo, TSchoolList } from '@/types/data/TSchoolList';
 import { atom, useAtom } from 'jotai';
 import { useEffect } from 'react';
 
 // 학교 데이터를 저장할 atom
-export const schoolsDataAtom = atom<Record<string, string[]>>({});
+export const schoolsDataAtom = atom<Record<string, TSchoolList>>({});
 
 export function useSchoolData() {
   const [schoolsData, setSchoolsData] = useAtom(schoolsDataAtom);
 
   useEffect(() => {
     const fetchSchools = async () => {
-      const response = await fetch('/api/schools', {
+      const response = await fetch('/api/openapi/schools', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -22,23 +23,21 @@ export function useSchoolData() {
 
         if (result.data) {
           // API 응답에서 학교 데이터를 지역별로 구조화
-          const schoolsByRegion: Record<string, string[]> = {};
+          const schoolsByRegion: Record<string, TSchoolList> = {};
 
-          result.data.forEach(
-            (school: { schoolName: string; eduId: number }) => {
-              // eduId를 기반으로 지역 찾기
-              const educationOffice = EDUCATION_OFFICES.find(
-                (office) => office.code === `${school.eduId}`
-              );
-              const region = educationOffice?.region || '기타';
+          result.data.forEach((school: SchoolInfo) => {
+            // eduId를 기반으로 지역 찾기
+            const educationOffice = EDUCATION_OFFICES.find(
+              (office) => office.code === `${school.eduId}`
+            );
+            const region = educationOffice?.region || '기타';
 
-              if (!schoolsByRegion[region]) {
-                schoolsByRegion[region] = [];
-              }
-
-              schoolsByRegion[region].push(school.schoolName);
+            if (!schoolsByRegion[region]) {
+              schoolsByRegion[region] = [];
             }
-          );
+
+            schoolsByRegion[region].push(school);
+          });
 
           setSchoolsData(schoolsByRegion);
         }
