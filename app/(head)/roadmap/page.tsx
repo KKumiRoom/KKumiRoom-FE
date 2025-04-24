@@ -2,6 +2,7 @@
 
 import SubjectFilterForm from '@/components/molecules/SubjectFilterForm';
 import SubjectSection from '@/components/molecules/SubjectSection';
+import SubjectSectionSkeleton from '@/components/molecules/SubjectSectionSkeleton';
 import { SECTION_TYPES } from '@/constants/departmentData';
 import { useMajorDetail } from '@/hooks/useMajorData';
 import { useSearchParams } from 'next/navigation';
@@ -29,7 +30,15 @@ const RoadmapContent = () => {
       </div>
 
       <div className='flex flex-col gap-6'>
-        {loading && <div>Loading...</div>}
+        {loading && (
+          <>
+            <SubjectSectionSkeleton />
+            <SubjectSectionSkeleton />
+            <SubjectSectionSkeleton />
+            <SubjectSectionSkeleton />
+            <SubjectSectionSkeleton />
+          </>
+        )}
         {!loading && majorDetail && (
           <>
             <SubjectSection
