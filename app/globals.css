@@ -11,6 +11,8 @@
   --card: #d3ebcd;
   --grey: #aaaaaa;
   --warning: #e90061;
+  --confirm: #6a8dff;
+  --lemon: #ffd65a;
   --mint: #aedbce;
   --device-width: 390px;
   --device-height: 844px;
@@ -28,6 +30,8 @@
   --color-grey: var(--grey);
   --color-mint: var(--mint);
   --color-warning: var(--warning);
+  --color-confirm: var(--confirm);
+  --color-lemon: var(--lemon);
   --font-pretendard:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
