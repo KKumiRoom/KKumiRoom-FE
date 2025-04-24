@@ -27,11 +27,6 @@ export interface Subject {
   code: string;
 
   /**
-   * 담당 교사
-   */
-  teacher: string;
-
-  /**
    * 학기 정보
    */
   semester: string;

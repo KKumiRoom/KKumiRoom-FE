@@ -11,6 +11,7 @@ interface SubjectModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDelete?: () => void;
+  onEdit?: () => void;
 }
 
 const SubjectModal = ({
@@ -18,26 +19,31 @@ const SubjectModal = ({
   isOpen,
   onClose,
   onDelete,
+  onEdit,
 }: SubjectModalProps) => {
-  // 내부적으로 모달 상태 관리
   const [internalIsOpen, setInternalIsOpen] = useState(isOpen);
 
-  // 외부 isOpen prop이 변경되면 내부 상태 동기화
   useEffect(() => {
     setInternalIsOpen(isOpen);
   }, [isOpen]);
 
-  // 내부적으로 모달 닫기
   const handleClose = () => {
     setInternalIsOpen(false);
     onClose();
   };
 
-  // 내부적으로 삭제 처리 및 모달 닫기
   const handleDelete = () => {
     setInternalIsOpen(false);
     if (onDelete) {
       onDelete();
+    }
+    onClose();
+  };
+
+  const handleEdit = () => {
+    setInternalIsOpen(false);
+    if (onEdit) {
+      onEdit();
     }
     onClose();
   };
@@ -47,6 +53,11 @@ const SubjectModal = ({
       <Button fullWidth onClick={handleDelete} variant='gray'>
         삭제
       </Button>
+      {onEdit && (
+        <Button fullWidth onClick={handleEdit} variant='secondary'>
+          수정
+        </Button>
+      )}
       <Button fullWidth onClick={handleClose} variant='primary'>
         닫기
       </Button>

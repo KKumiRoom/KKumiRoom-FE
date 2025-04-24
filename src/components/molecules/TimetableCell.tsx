@@ -18,31 +18,26 @@ const TimetableCell = ({
   onClick,
 }: TimetableCellProps) => {
   const handleClick = () => {
-    if (subject && onClick) {
+    if (onClick) {
       onClick();
     }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (subject && onClick && (e.key === 'Enter' || e.key === ' ')) {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
       onClick();
     }
   };
 
   // 과목이 있는 셀과 없는 셀에 대한 속성 설정
-  const interactiveProps = subject
-    ? {
-        onClick: handleClick,
-        onKeyDown: handleKeyDown,
-        role: 'button',
-        tabIndex: 0,
-        'aria-label': `${subject.name} 과목`,
-      }
-    : {
-        role: 'cell',
-        'aria-label': '빈 셀',
-      };
+  const interactiveProps = {
+    onClick: handleClick,
+    onKeyDown: handleKeyDown,
+    role: 'button',
+    tabIndex: 0,
+    'aria-label': subject ? `${subject.name} 과목` : '빈 셀',
+  };
 
   return (
     <div
@@ -51,7 +46,7 @@ const TimetableCell = ({
         subject?.color || 'bg-cloud',
         !isLastColumn && 'border-r border-grey',
         !isLastRow && 'border-b border-grey',
-        subject && 'cursor-pointer hover:opacity-80'
+        'cursor-pointer hover:opacity-80'
       )}
       {...interactiveProps}
     >

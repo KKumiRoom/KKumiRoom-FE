@@ -9,12 +9,6 @@ interface SubjectDetailsProps {
 const SubjectDetails = ({ subject }: SubjectDetailsProps) => {
   return (
     <div className='space-y-4'>
-      <div>
-        <p className='text-lg font-semibold mb-1'>
-          {`${subject.teacher} 선생님` || '정보 없음'}
-        </p>
-      </div>
-
       <h3 className='font-bold mb-1'>과목 정보</h3>
       <div className='flex gap-1'>
         <div className='flex gap-4 justify-around w-full px-2'>
