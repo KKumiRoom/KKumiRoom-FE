@@ -1,7 +1,7 @@
 'use client';
 
 import Timetable from '@/components/organisms/Timetable';
-import { useTimetableData } from '@/hooks/useTimetableData';
+import useTimetableData from '@/hooks/useTimetableData';
 
 const schoolInfo = {
   name: '대인고등학교',

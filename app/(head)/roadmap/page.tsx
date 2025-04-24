@@ -5,9 +5,9 @@ import SubjectSection from '@/components/molecules/SubjectSection';
 import { SECTION_TYPES } from '@/constants/departmentData';
 import { useMajorDetail } from '@/hooks/useMajorData';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 
-const RoadmapPage = () => {
+const RoadmapContent = () => {
   const searchParams = useSearchParams();
   const initialMajor = searchParams.get('subject');
   const [selectedMajorId, setSelectedMajorId] = useState<number | null>(null);
@@ -56,6 +56,14 @@ const RoadmapPage = () => {
         )}
       </div>
     </div>
+  );
+};
+
+const RoadmapPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RoadmapContent />
+    </Suspense>
   );
 };
 

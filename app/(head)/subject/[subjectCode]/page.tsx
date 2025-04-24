@@ -1,7 +1,7 @@
 'use client';
 
 import BottomSheet from '@/components/molecules/BottomSheet';
-import { SUBJECTS } from '@/constants/schoolData';
+import useSubjectApi from '@/hooks/useSubjectApi';
 import { Subject } from '@/types/subject';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -10,26 +10,43 @@ const SubjectDetailPage = () => {
   const params = useParams();
   const subjectCode = params.subjectCode as string;
   const [subject, setSubject] = useState<Subject | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { fetchSubjects } = useSubjectApi();
 
   useEffect(() => {
-    const foundSubject = SUBJECTS.find((s) => s.code === subjectCode);
+    const loadSubject = async () => {
+      const courses = await fetchSubjects('7010117');
+      const foundCourse = courses.find(
+        (c) => c.courseId.toString() === subjectCode
+      );
 
-    if (foundSubject) {
-      setSubject({
-        ...foundSubject,
-      });
-    }
-  }, [subjectCode]);
+      if (foundCourse) {
+        setSubject({
+          name: foundCourse.courseName,
+          type: foundCourse.courseType as '공통' | '선택',
+          code: foundCourse.courseId.toString(),
+          department: foundCourse.courseArea,
+          description: foundCourse.description,
+          semester: foundCourse.semester,
+        });
+      }
+      setLoading(false);
+    };
+    loadSubject();
+  }, [subjectCode, fetchSubjects]);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
 
   if (!subject) {
-    return <div>과목을 찾는 중입니다.</div>;
+    return <div>과목을 찾을 수 없습니다.</div>;
   }
 
   return (
     <>
       <div className='flex-1 flex flex-col items-center justify-center min-h-[30vh]'>
         <h1 className='text-3xl font-bold mb-2'>{subject.name}</h1>
-        <p className='text-lg'>{subject.teacher}</p>
       </div>
 
       <BottomSheet className='pb-20'>

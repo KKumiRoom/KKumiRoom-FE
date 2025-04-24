@@ -27,10 +27,10 @@ function useAuth() {
 
     try {
       // 기존 세션 종료를 위해 로그아웃 API 호출
-      await create<Record<string, never>, ApiResponse>(
-        '/api/auth/sign-out',
-        {}
-      );
+      // await create<Record<string, never>, ApiResponse>(
+      //   '/api/auth/sign-out',
+      //   {}
+      // );
 
       const response = await create<TAuth, ApiResponse>(
         '/api/auth/sign-in',

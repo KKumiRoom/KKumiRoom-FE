@@ -2,14 +2,34 @@
 
 import SubjectFilter from '@/components/organisms/SubjectFilter';
 import SubjectList from '@/components/organisms/SubjectList';
-import { SUBJECTS } from '@/constants/schoolData';
+import useSubjectApi from '@/hooks/useSubjectApi';
 import useSubjectFilter from '@/hooks/useSubjectFilter';
 import useSubjectSearch from '@/hooks/useSubjectSearch';
 import { Subject } from '@/types/subject';
-import { useCallback, useMemo } from 'react';
+import { Course } from '@/types/timetable';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function SubjectPage() {
-  const initialData = useMemo(() => SUBJECTS, []);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { fetchSubjects } = useSubjectApi();
+
+  useEffect(() => {
+    const loadSubjects = async () => {
+      const courses = await fetchSubjects('7010117');
+      const convertedSubjects: Subject[] = courses.map((course: Course) => ({
+        name: course.courseName,
+        type: course.courseType as '공통' | '선택',
+        code: course.courseId.toString(),
+        department: course.courseArea,
+        description: course.description,
+        semester: course.semester,
+      }));
+      setSubjects(convertedSubjects);
+      setLoading(false);
+    };
+    loadSubjects();
+  }, [fetchSubjects]);
 
   const {
     searchQuery,
@@ -18,7 +38,7 @@ export default function SubjectPage() {
     isLoading,
     handleSearchSubmit,
   } = useSubjectSearch<Subject>({
-    initialData,
+    initialData: subjects,
     searchKeys: ['name', 'code'],
   });
 
@@ -61,6 +81,10 @@ export default function SubjectPage() {
   const handleResetAll = useCallback(() => {
     resetFilters();
   }, [resetFilters]);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <div>

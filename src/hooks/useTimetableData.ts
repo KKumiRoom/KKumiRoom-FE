@@ -26,10 +26,11 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
   const { fetchCourses, fetchTimetable, updateTimetable, deleteTimetableItem } =
     useTimetableApi();
 
-  const getRandomColor = () => {
-    const randomIndex = Math.floor(Math.random() * TIMETABLE_COLORS.length);
-    return TIMETABLE_COLORS[randomIndex];
-  };
+  // 과목 ID를 기준으로 색상을 결정하는 함수
+  const getColorForCourse = useCallback((courseId: number) => {
+    const index = courseId % TIMETABLE_COLORS.length;
+    return TIMETABLE_COLORS[index];
+  }, []);
 
   const loadCourses = useCallback(async () => {
     const coursesData = await fetchCourses(schoolId);
@@ -37,34 +38,37 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
     setLoading(false);
   }, [fetchCourses, schoolId]);
 
-  const loadTimetable = useCallback(async () => {
-    if (courses.length === 0) return;
+  const loadTimetable = useCallback(
+    async (currentCourses: Course[]) => {
+      if (currentCourses.length === 0) return;
 
-    const timetableItems = await fetchTimetable(timetableId);
-    const newTimetableData: TimetableData = {};
+      const timetableItems = await fetchTimetable(timetableId);
+      const newTimetableData: TimetableData = {};
 
-    timetableItems.forEach((item: TimetableItem) => {
-      const day = DAY_MAPPING[item.day] || item.day.toLowerCase();
-      if (!newTimetableData[day]) {
-        newTimetableData[day] = {};
-      }
+      timetableItems.forEach((item: TimetableItem) => {
+        const day = DAY_MAPPING[item.day] || item.day.toLowerCase();
+        if (!newTimetableData[day]) {
+          newTimetableData[day] = {};
+        }
 
-      const course = courses.find((c) => c.courseId === item.courseId);
-      if (course) {
-        newTimetableData[day][item.period.toString()] = {
-          name: course.courseName,
-          color: getRandomColor(),
-          type: course.courseType as '공통' | '선택',
-          code: course.courseId.toString(),
-          semester: item.semester,
-          department: course.courseArea,
-          description: course.description,
-        };
-      }
-    });
+        const course = currentCourses.find((c) => c.courseId === item.courseId);
+        if (course) {
+          newTimetableData[day][item.period.toString()] = {
+            name: course.courseName,
+            color: getColorForCourse(course.courseId),
+            type: course.courseType as '공통' | '선택',
+            code: course.courseId.toString(),
+            semester: item.semester,
+            department: course.courseArea,
+            description: course.description,
+          };
+        }
+      });
 
-    setTimetableData(newTimetableData);
-  }, [courses, fetchTimetable, timetableId]);
+      setTimetableData(newTimetableData);
+    },
+    [fetchTimetable, timetableId, getColorForCourse]
+  );
 
   const handleCourseUpdate = async (
     courseId: number,
@@ -82,7 +86,7 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
           }
           newData[day][period.toString()] = {
             name: course.courseName,
-            color: getRandomColor(),
+            color: getColorForCourse(course.courseId),
             type: course.courseType as '공통' | '선택',
             code: course.courseId.toString(),
             semester: '2025',
@@ -114,7 +118,7 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
 
   useEffect(() => {
     if (courses.length > 0) {
-      loadTimetable();
+      loadTimetable(courses);
     }
   }, [courses, loadTimetable]);
 
