@@ -3,9 +3,11 @@ import AppNavBar from '@/components/containers/AppNavBar';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='min-h-screen w-[90%] mx-auto'>
+    <div>
       <AppHeader showBackButton={false} />
-      <div className='pt-[4.5rem] pb-16'>{children}</div>
+      <div className='min-h-screen w-[90%] mx-auto pt-[4.5rem] pb-16'>
+        {children}
+      </div>
       <AppNavBar />
     </div>
   );

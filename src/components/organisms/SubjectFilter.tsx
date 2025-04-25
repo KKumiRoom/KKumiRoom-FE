@@ -27,7 +27,7 @@ const SubjectFilter = ({
   onFilterReset,
 }: SubjectFilterProps) => {
   return (
-    <div className='top-[4.5rem] left-0 fixed z-10 w-full bg-background pb-4 after:content-[""] after:absolute after:left-0 after:right-0 after:bottom-[-12px] after:h-[12px] after:bg-gradient-to-b after:from-background after:to-transparent after:z-[-1]'>
+    <div className='fixed top-[4.5rem] left-0 right-0 z-10 w-full max-w-[var(--device-width)] mx-auto bg-background pb-4 after:content-[""] after:absolute after:left-0 after:right-0 after:bottom-[-12px] after:h-[12px] after:bg-gradient-to-b after:from-background after:to-transparent after:z-[-1]'>
       <div className='w-[90%] mx-auto flex items-center justify-between gap-3'>
         <SearchForm
           value={searchQuery}

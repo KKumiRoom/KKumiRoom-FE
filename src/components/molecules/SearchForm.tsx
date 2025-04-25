@@ -69,5 +69,4 @@ const SearchForm = ({
   );
 };
 
-// React.memo를 사용하여 불필요한 리렌더링 방지
 export default React.memo(SearchForm);

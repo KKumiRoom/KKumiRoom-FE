@@ -1,4 +1,4 @@
-import KkumiLogoIcon from '@/components/icons/KkumiLogoIcon';
+import KkumiLogoIcon from '@/components/atoms/KkumiLogoIcon';
 
 export default function Home() {
   return (

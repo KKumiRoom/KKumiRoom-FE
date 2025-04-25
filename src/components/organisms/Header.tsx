@@ -22,7 +22,7 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-10 w-full ${transparent ? 'bg-transparent' : 'bg-inherit'}`}
+      className={`fixed top-0 left-0 right-0 z-10 w-full max-w-[var(--device-width)] mx-auto ${transparent ? 'bg-transparent' : 'bg-background'}`}
     >
       <div className='flex items-center justify-between w-[90%] mx-auto py-5'>
         <div className='w-8'>

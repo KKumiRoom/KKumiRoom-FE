@@ -7,11 +7,13 @@ import { usePathname, useRouter } from 'next/navigation';
 interface AppHeaderProps {
   showBackButton?: boolean;
   showUserButton?: boolean;
+  transparent?: boolean;
 }
 
 const AppHeader = ({
   showBackButton = true,
   showUserButton = true,
+  transparent = false,
 }: AppHeaderProps) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -37,7 +39,7 @@ const AppHeader = ({
             }
           : undefined
       }
-      transparent={isSubjectPage}
+      transparent={transparent || isSubjectPage}
     />
   );
 };
