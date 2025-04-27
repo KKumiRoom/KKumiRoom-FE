@@ -1,37 +1,46 @@
 'use client';
 
+import KkumiRoomLogo from '@/components/atoms/KkumiRoomLogo';
 import ProfileInfoSection from '@/components/organisms/ProfileInfoSection';
 import ProfileRoadmapCard from '@/components/organisms/ProfileRoadmapCard';
 import ProfileTop from '@/components/organisms/ProfileTop';
-
-const profileInfo = {
-  name: '김철수',
-  profileImage: '/images/user.png',
-  birthDate: '1990-01-01',
-  phoneNumber: '010-1234-5678',
-  address: '인천시 남동구',
-  major: {
-    majorId: 1,
-    majorName: '소프트웨어 공학',
-    description: '소프트웨어 공학에 대해 알아봐요.',
-    recommendedCourses: '하나둘',
-  },
-  schoolName: '대인고등학교',
-  grade: '3학년',
-  class: '8반',
-};
+import useUserData from '@/hooks/useUserData';
 
 const ProfilePage = () => {
+  const { user, isLoading } = useUserData();
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center min-h-screen'>
+        <KkumiRoomLogo />
+      </div>
+    );
+  }
+
   return (
     <div className='flex flex-col items-center'>
-      <ProfileTop name={profileInfo.name} image={profileInfo.profileImage} />
+      <ProfileTop name={user.userName} image={user.profileImage} />
       <div className='w-[90%] mt-8 mb-12'>
-        <ProfileInfoSection profileData={profileInfo} />
+        <ProfileInfoSection
+          profileData={{
+            name: user.userName,
+            birthDate: user.birth,
+            phoneNumber: user.phone,
+            address: user.address,
+            schoolName: user.school.schoolName,
+            grade: user.grade,
+            class: user.classNum,
+          }}
+        />
       </div>
-      <ProfileRoadmapCard
-        majorId={profileInfo.major.majorId}
-        majorName={profileInfo.major.majorName}
-      />
+      {user.interestMajor ? (
+        <ProfileRoadmapCard
+          majorId={user.interestMajor.majorId}
+          majorName={user.interestMajor.majorName}
+        />
+      ) : (
+        <ProfileRoadmapCard majorId={0} majorName='' />
+      )}
     </div>
   );
 };

@@ -17,11 +17,15 @@ interface ProfileInfoSectionProps {
 export default function ProfileInfoSection({
   profileData,
 }: ProfileInfoSectionProps) {
+  const phoneNumber = profileData.phoneNumber.replace(
+    /(\d{3})(\d{4})(\d{4})/,
+    '$1-$2-$3'
+  );
   return (
     <div className='flex flex-col gap-8'>
       <ProfileInfo icon={<FaUser />} value={profileData.name} />
       <ProfileInfo icon={<FaBirthdayCake />} value={profileData.birthDate} />
-      <ProfileInfo icon={<FaPhone />} value={profileData.phoneNumber} />
+      <ProfileInfo icon={<FaPhone />} value={phoneNumber} />
       <ProfileInfo icon={<FaMapMarkerAlt />} value={profileData.address} />
       <ProfileInfo
         icon={<FaSchool />}
