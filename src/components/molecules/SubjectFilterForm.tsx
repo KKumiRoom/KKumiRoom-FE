@@ -65,12 +65,10 @@ const SubjectFilterForm = ({
     onMajorSelect(id);
   };
 
-  // 초기 학과가 있을 경우 처리
   useEffect(() => {
     if (initialMajor && selectedType === -1) {
       const fetchInitialMajor = async () => {
         try {
-          // 모든 계열의 학과 정보를 병렬로 가져옴
           const allMajorsPromises = DEPARTMENT_TYPES.map((type) =>
             fetchMajorsByArea(type.name)
               .then((majors: MajorInfo[]) => ({ type, majors }))
@@ -79,7 +77,6 @@ const SubjectFilterForm = ({
 
           const results = await Promise.all(allMajorsPromises);
 
-          // 일치하는 학과 찾기
           const matchingResult = results.find(({ majors }) =>
             majors.some((major: MajorInfo) => major.name === initialMajor)
           );

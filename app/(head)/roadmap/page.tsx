@@ -5,13 +5,12 @@ import SubjectSection from '@/components/molecules/SubjectSection';
 import SubjectSectionSkeleton from '@/components/molecules/SubjectSectionSkeleton';
 import { SECTION_TYPES } from '@/constants/departmentData';
 import { useMajorDetail } from '@/hooks/useMajorData';
-import { useSearchParams } from 'next/navigation';
+import useUserData from '@/hooks/useUserData';
 import { useState, Suspense } from 'react';
 
 const RoadmapContent = () => {
-  const searchParams = useSearchParams();
-  const initialMajor = searchParams.get('subject');
   const [selectedMajorId, setSelectedMajorId] = useState<number | null>(null);
+  const { user } = useUserData();
 
   const { majorDetail, loading } = useMajorDetail(selectedMajorId);
 
@@ -24,7 +23,7 @@ const RoadmapContent = () => {
       <div>
         <h1 className='text-xl font-semibold mb-4'>학과별 과목안내</h1>
         <SubjectFilterForm
-          initialMajor={initialMajor || undefined}
+          initialMajor={user.interestMajor?.majorName}
           onMajorSelect={handleMajorSelect}
         />
       </div>
