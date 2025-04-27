@@ -8,41 +8,42 @@ import { useData } from './useFetch';
  * @returns 변환된 사용자 정보와 로딩 상태
  */
 export default function useUserData() {
-  const { data: userData, isLoading } = useData<ApiResponse<TUserResponse>>(
-    '/api/openapi/users/me'
-  );
+  const { data: userData, isLoading } =
+    useData<ApiResponse<TUserResponse>>('/api/users/me');
 
   // 사용자 정보 변환
   const user: TUser = userData?.data
     ? {
-        name: userData.data.userName,
+        userId: userData.data.userId,
+        userName: userData.data.userName,
         profileImage: '/images/user.png',
-        birthDate: userData.data.birth,
-        phoneNumber: userData.data.phone,
+        birth: userData.data.birth,
+        phone: userData.data.phone,
         address: userData.data.address,
         interestMajor: userData.data.interestMajor,
         school: {
           schoolId: userData.data.school.schoolId,
-          name: userData.data.school.schoolName,
+          schoolName: userData.data.school.schoolName,
           homepage: userData.data.school.homepage,
         },
         grade: `${userData.data.grade}학년`,
-        class: `${userData.data.classNum}반`,
+        classNum: `${userData.data.classNum}반`,
       }
     : {
-        name: '',
+        userId: 0,
+        userName: '',
         profileImage: '',
-        birthDate: '',
-        phoneNumber: '',
+        birth: '',
+        phone: '',
         address: '',
         interestMajor: null,
         school: {
           schoolId: 1,
-          name: '',
+          schoolName: '',
           homepage: '',
         },
         grade: '',
-        class: '',
+        classNum: '',
       };
 
   return { user, isLoading };

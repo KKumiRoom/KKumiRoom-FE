@@ -1,14 +1,22 @@
 import LinkCard from '../molecules/LinkCard';
 
-export default function ProfileRoadmapCard({ major }: { major: string }) {
-  if (major === '') {
+interface ProfileRoadmapCardProps {
+  majorId: number;
+  majorName: string;
+}
+
+export default function ProfileRoadmapCard({
+  majorId,
+  majorName,
+}: ProfileRoadmapCardProps) {
+  if (majorId === 0) {
     return (
       <LinkCard
-        image='/images/cardImage/think.png'
-        title='나의 진로 찾기'
-        description='꾸미룸과 함께 나의 진로를 찾아봐요.'
+        image='/images/cardImage/location.png'
+        title='원하는 학과를 선택해 주세요'
+        description='꾸미룸에서 원하는 학과에 가기 위해 필요한 수업을 안내해줄게요!'
         href='/roadmap'
-        className='bg-[#D2DAE0]'
+        className='bg-cloud'
       />
     );
   }
@@ -16,10 +24,10 @@ export default function ProfileRoadmapCard({ major }: { major: string }) {
   return (
     <LinkCard
       image='/images/cardImage/think.png'
-      title={`${major}에 가려면?`}
-      description={`${major}에 가기위해 들어야할 수업에 대해 알아봐요.`}
-      href='/roadmap/software-engineering'
-      className='bg-[#D2DAE0]'
+      title={`${majorName}에 가려면?`}
+      description={`${majorName}에 가기위해 들어야할 수업에 대해 알아봐요.`}
+      href={`/roadmap/${majorId}`}
+      className='bg-cloud'
     />
   );
 }

@@ -33,19 +33,20 @@ export type {
 
 // 사용자 정의 타입
 export interface TUser {
-  name: string;
+  userId: number;
+  userName: string;
   profileImage: string;
-  birthDate: string;
-  phoneNumber: string;
+  birth: string;
+  phone: string;
   address: string;
   interestMajor: TMajorInfo | null;
   school: {
     schoolId: number;
-    name: string;
+    schoolName: string;
     homepage: string;
   };
   grade: string;
-  class: string;
+  classNum: string;
 }
 
 export type BadgeVariant = 'selected' | 'previous' | 'next';

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-interface KkumiLogoIconProps {
+interface KkumiRoomLogoProps {
   width?: number;
   height?: number;
   fill?: string;
@@ -11,13 +11,13 @@ interface KkumiLogoIconProps {
   className?: string;
 }
 
-const KkumiLogoIcon = ({
+const KkumiRoomLogo = ({
   width = 200,
   height = 200,
   fill = '#61B89F',
   autoPlay = true,
   className,
-}: KkumiLogoIconProps) => {
+}: KkumiRoomLogoProps) => {
   // 한글 자음(ㄲ, ㅁ, ㄹ) 애니메이션을 위한 variants
   const pathVariants = {
     hidden: {
@@ -153,4 +153,4 @@ const KkumiLogoIcon = ({
   );
 };
 
-export default KkumiLogoIcon;
+export default KkumiRoomLogo;

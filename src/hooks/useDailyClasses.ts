@@ -17,9 +17,8 @@ export default function useDailyClasses() {
   const todayDayCode = DAY_CODE_MAP[new Date().getDay()];
 
   // 시간표 데이터 가져오기
-  const { data: timeTableData, isLoading } = useData<
-    ApiResponse<TTimeTableResponse[]>
-  >('/api/openapi/timeTable');
+  const { data: timeTableData, isLoading } =
+    useData<ApiResponse<TTimeTableResponse[]>>('/api/timeTable');
 
   // 오늘 요일에 해당하는 수업만 필터링
   const todayClasses = timeTableData?.data

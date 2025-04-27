@@ -18,7 +18,7 @@ export default function ProfileInfoSection({
   profileData,
 }: ProfileInfoSectionProps) {
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-8'>
       <ProfileInfo icon={<FaUser />} value={profileData.name} />
       <ProfileInfo icon={<FaBirthdayCake />} value={profileData.birthDate} />
       <ProfileInfo icon={<FaPhone />} value={profileData.phoneNumber} />

@@ -21,7 +21,7 @@ export const fetchMajorsByArea = async (majorArea: string) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
   const response = await fetch(
-    `${apiUrl}/api/openapi/major/area?majorArea=${encodeURIComponent(majorArea)}`,
+    `${apiUrl}/api/major/area?majorArea=${encodeURIComponent(majorArea)}`,
     {
       method: 'GET',
       headers: {
@@ -57,7 +57,7 @@ export const useMajorDetail = (majorId: number | null) => {
       try {
         const apiUrl =
           process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
-        const response = await fetch(`${apiUrl}/api/openapi/major/${majorId}`, {
+        const response = await fetch(`${apiUrl}/api/major/${majorId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -2,7 +2,6 @@ import { Course, TIMETABLE_COLORS, TimetableData } from '@/types/timetable';
 import { useState, useEffect, useCallback } from 'react';
 import useTimetableApi from './useTimetableApi';
 
-// API 응답의 요일을 한글 요일로 매핑
 const DAY_MAPPING: { [key: string]: string } = {
   MON: '월',
   TUE: '화',
@@ -26,7 +25,6 @@ const useTimetableData = (schoolId: string) => {
   const { fetchCourses, fetchTimetable, updateTimetable, deleteTimetableItem } =
     useTimetableApi();
 
-  // 과목 ID를 기준으로 색상을 결정하는 함수
   const getColorForCourse = useCallback((courseId: number) => {
     const index = courseId % TIMETABLE_COLORS.length;
     return TIMETABLE_COLORS[index];

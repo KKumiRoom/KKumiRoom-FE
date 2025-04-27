@@ -11,7 +11,7 @@ interface UserMajorSectionProps {
 export default function UserMajorSection({ user }: UserMajorSectionProps) {
   return (
     <div className='flex flex-col gap-4'>
-      <p className='text-lg font-semibold'>{user.name}님의 희망 학과</p>
+      <p className='text-lg font-semibold'>{user.userName}님의 희망 학과</p>
       {user.interestMajor ? (
         <MajorInfoCard major={user.interestMajor} />
       ) : (

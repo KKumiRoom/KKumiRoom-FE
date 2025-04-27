@@ -16,7 +16,7 @@ const useTimetableApi = () => {
     async (schoolId: string): Promise<Course[]> => {
       try {
         const response = await fetch(
-          `${API_URL}/api/openapi/courses?schoolId=${schoolId}`,
+          `${API_URL}/api/courses?schoolId=${schoolId}`,
           {
             method: 'GET',
             headers: {
@@ -41,7 +41,7 @@ const useTimetableApi = () => {
 
   const fetchTimetable = useCallback(async (): Promise<TimetableItem[]> => {
     try {
-      const response = await fetch(`${API_URL}/api/openapi/timeTable`, {
+      const response = await fetch(`${API_URL}/api/timeTable`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const useTimetableApi = () => {
   const updateTimetable = useCallback(
     async (courseId: number, period: number, day: string): Promise<boolean> => {
       try {
-        const response = await fetch(`${API_URL}/api/openapi/timeTable`, {
+        const response = await fetch(`${API_URL}/api/timeTable`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const useTimetableApi = () => {
   const deleteTimetableItem = useCallback(
     async (period: number, day: string): Promise<boolean> => {
       try {
-        const response = await fetch(`${API_URL}/api/openapi/timeTable`, {
+        const response = await fetch(`${API_URL}/api/timeTable`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

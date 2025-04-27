@@ -1,5 +1,6 @@
 'use client';
 
+import KkumiRoomLogo from '@/components/atoms/KkumiRoomLogo';
 import GreetingText from '@/components/molecules/GreetingText';
 import MainAdCard from '@/components/molecules/MainAdCard';
 import TodayClassesSection from '@/components/organisms/TodayClassesSection';
@@ -30,7 +31,7 @@ export default function Home() {
   if (isUserLoading || isClassesLoading) {
     return (
       <div className='flex justify-center items-center min-h-screen'>
-        로딩 중...
+        <KkumiRoomLogo />
       </div>
     );
   }
@@ -39,7 +40,7 @@ export default function Home() {
     <div className='flex flex-col gap-12 pt-3'>
       {/* 인사말 및 광고 섹션 */}
       <div className='flex flex-col gap-4'>
-        <GreetingText name={user.name} />
+        <GreetingText name={user.userName} />
         <MainAdCard />
       </div>
 
