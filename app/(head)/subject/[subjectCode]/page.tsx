@@ -11,12 +11,11 @@ const SubjectDetailPage = () => {
   const subjectCode = params.subjectCode as string;
   const [subject, setSubject] = useState<Subject | null>(null);
   const [loading, setLoading] = useState(true);
-  const { fetchSubjects } = useSubjectApi();
+  const { subjects } = useSubjectApi();
 
   useEffect(() => {
     const loadSubject = async () => {
-      const courses = await fetchSubjects('7010117');
-      const foundCourse = courses.find(
+      const foundCourse = subjects.find(
         (c) => c.courseId.toString() === subjectCode
       );
 
@@ -33,7 +32,7 @@ const SubjectDetailPage = () => {
       setLoading(false);
     };
     loadSubject();
-  }, [subjectCode, fetchSubjects]);
+  }, [subjectCode, subjects]);
 
   if (loading) {
     return <div>로딩 중...</div>;

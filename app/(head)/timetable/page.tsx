@@ -2,32 +2,19 @@
 
 import Timetable from '@/components/organisms/Timetable';
 import useTimetableData from '@/hooks/useTimetableData';
-
-const schoolInfo = {
-  name: '대인고등학교',
-  grade: '3학년',
-  class: '8반',
-};
+import useUserData from '@/hooks/useUserData';
 
 const TimetablePage = () => {
-  const {
-    courses,
-    timetableData,
-    loading,
-    handleCourseUpdate,
-    handleCourseDelete,
-  } = useTimetableData('7010117');
-
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
+  const { user } = useUserData();
+  const { courses, timetableData, handleCourseUpdate, handleCourseDelete } =
+    useTimetableData();
 
   return (
     <div className='container mx-auto p-4'>
       <div className='mb-4'>
-        <h1 className='text-2xl font-bold'>{schoolInfo.name}</h1>
+        <h1 className='text-2xl font-bold'>{user.school.schoolName}</h1>
         <p className='text-gray-600'>
-          {schoolInfo.grade} {schoolInfo.class}
+          {user.grade} {user.classNum}
         </p>
       </div>
       <Timetable

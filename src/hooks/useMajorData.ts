@@ -1,5 +1,6 @@
 import { ApiResponse } from '@/types/ApiResponse';
 import { fetcher } from '@/lib/utils/api';
+import { ErrorToast } from '@/lib/utils/notifications';
 import { useData } from './useFetch';
 
 export interface MajorInfo {
@@ -19,9 +20,6 @@ export interface MajorDetailInfo {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-/**
- * 학과 영역별 목록을 가져오는 함수 (Promise 기반)
- */
 export const fetchMajorsByArea = async (
   majorArea: string
 ): Promise<MajorInfo[]> => {
@@ -30,7 +28,7 @@ export const fetchMajorsByArea = async (
     const response = await fetcher<ApiResponse<MajorInfo[]>>(url);
     return response.data || [];
   } catch (error) {
-    console.error('학과 정보 조회 에러:', error);
+    ErrorToast(`학과 정보 조회 에러 ${error}`);
     return [];
   }
 };
@@ -49,9 +47,6 @@ export const useMajorsByArea = (majorArea: string | null) => {
   };
 };
 
-/**
- * 학과 상세 정보를 가져오는 SWR 기반 훅
- */
 export const useMajorDetail = (majorId: number | null) => {
   const url = majorId ? `${API_URL}/api/major/${majorId}` : null;
 

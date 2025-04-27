@@ -70,7 +70,8 @@ const Timetable = ({
   };
 
   const handleCourseDelete = async (day: string, period: number) => {
-    await onCourseDelete(period, DAY_MAPPING[day as keyof typeof DAY_MAPPING]);
+    const dayCode = DAY_MAPPING[day as keyof typeof DAY_MAPPING];
+    await onCourseDelete(period, dayCode);
     setSelectedSubject(null);
   };
 

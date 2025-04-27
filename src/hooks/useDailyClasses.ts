@@ -70,8 +70,10 @@ export default function useDailyClasses() {
   };
 
   // 초기 로딩 및 주기적인 업데이트
+
   useEffect(() => {
     scrollToCurrentPeriod();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

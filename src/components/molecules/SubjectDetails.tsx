@@ -14,7 +14,7 @@ const SubjectDetails = ({ subject }: SubjectDetailsProps) => {
         <div className='flex gap-4 justify-around w-full px-2'>
           <div className='flex flex-col items-center gap-1 bg-grey/20 rounded-lg w-full p-2'>
             <p className='text-xs'>개설 학기</p>
-            <p className='text-xs'>{subject.semester && subject.semester}</p>
+            <p className='text-xs'>{subject.semester}</p>
           </div>
           <div className='flex flex-col items-center gap-1 bg-grey/20 rounded-lg w-full p-2'>
             <p className='text-xs'>학과</p>
@@ -24,7 +24,7 @@ const SubjectDetails = ({ subject }: SubjectDetailsProps) => {
           </div>
           <div className='flex flex-col items-center gap-1 bg-grey/20 rounded-lg w-full p-2'>
             <p className='text-xs'>분류</p>
-            <p className='text-xs'>{subject.type && subject.type}</p>
+            <p className='text-xs'>{subject.type}</p>
           </div>
         </div>
       </div>

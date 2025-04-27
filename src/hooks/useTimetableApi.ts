@@ -1,119 +1,70 @@
+import { ApiResponse } from '@/types/ApiResponse';
 import { Course } from '@/types/timetable';
-import { useCallback } from 'react';
-import { ErrorToast } from '@/lib/utils/notifications';
+import { useData, useDataMutation } from './useFetch';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
+// API에서 반환되는 시간표 항목 타입
 interface TimetableItem {
   courseId: number;
+  courseName: string;
   period: number;
   day: string;
-  semester: string;
 }
 
+// SWR 기반 시간표 API 훅
 const useTimetableApi = () => {
-  const fetchCourses = useCallback(async (): Promise<Course[]> => {
-    try {
-      const response = await fetch(`${API_URL}/api/courses`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  const { data: coursesResponse, isLoading: isCoursesLoading } = useData<
+    ApiResponse<Course[]>
+  >(`${API_URL}/api/courses`);
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch courses');
-      }
+  const {
+    data: timetableResponse,
+    isLoading: isTimetableLoading,
+    mutate: mutateTimetable,
+  } = useData<ApiResponse<TimetableItem[]>>(`${API_URL}/api/timeTable`);
 
-      const data = await response.json();
-      return data.data || [];
-    } catch {
-      ErrorToast('수업 목록을 불러오는데 실패했습니다.');
-      return [];
-    }
-  }, []);
+  const { create } = useDataMutation();
 
-  const fetchTimetable = useCallback(async (): Promise<TimetableItem[]> => {
-    try {
-      const response = await fetch(`${API_URL}/api/timeTable`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  // 시간표 업데이트
+  const updateTimetable = async (
+    courseId: number,
+    period: number,
+    day: string
+  ): Promise<void> => {
+    await create(`${API_URL}/api/timeTable`, {
+      courseId,
+      period,
+      day,
+    });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch timetable');
-      }
+    // 시간표 데이터 갱신
+    mutateTimetable();
+  };
 
-      const data = await response.json();
-      return data.data || [];
-    } catch {
-      ErrorToast('시간표 정보를 불러오는데 실패했습니다.');
-      return [];
-    }
-  }, []);
+  // 시간표 항목 삭제
+  const deleteTimetableItem = async (
+    period: number,
+    day: string
+  ): Promise<void> => {
+    await create(`${API_URL}/api/timeTable/delete`, {
+      period,
+      day,
+    });
 
-  const updateTimetable = useCallback(
-    async (courseId: number, period: number, day: string): Promise<boolean> => {
-      try {
-        const response = await fetch(`${API_URL}/api/timeTable`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            courseId,
-            period,
-            day,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to update timetable');
-        }
-
-        return true;
-      } catch {
-        ErrorToast('시간표 업데이트에 실패했습니다.');
-        return false;
-      }
-    },
-    []
-  );
-
-  const deleteTimetableItem = useCallback(
-    async (period: number, day: string): Promise<boolean> => {
-      try {
-        const response = await fetch(`${API_URL}/api/timeTable`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            period,
-            day,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to delete timetable item');
-        }
-
-        return true;
-      } catch {
-        ErrorToast('시간표 삭제에 실패했습니다.');
-        return false;
-      }
-    },
-    []
-  );
+    // 시간표 데이터 갱신
+    mutateTimetable();
+  };
 
   return {
-    fetchCourses,
-    fetchTimetable,
+    courses: coursesResponse?.data || [],
+    timetableItems: timetableResponse?.data || [],
+    isCoursesLoading,
+    isTimetableLoading,
+    isLoading: isCoursesLoading || isTimetableLoading,
     updateTimetable,
     deleteTimetableItem,
+    mutateTimetable,
   };
 };
 

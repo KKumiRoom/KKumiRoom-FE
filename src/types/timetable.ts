@@ -84,6 +84,7 @@ export interface TimeTableUpdateRequest {
   courseId: number;
   period: number;
   day: DayEnumType;
+  semester: number;
 }
 
 /**

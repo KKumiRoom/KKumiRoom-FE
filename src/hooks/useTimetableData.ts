@@ -1,4 +1,4 @@
-import { Course, TIMETABLE_COLORS, TimetableData } from '@/types/timetable';
+import { TIMETABLE_COLORS, TimetableData } from '@/types/timetable';
 import { useState, useEffect, useCallback } from 'react';
 import useTimetableApi from './useTimetableApi';
 
@@ -10,120 +10,66 @@ const DAY_MAPPING: { [key: string]: string } = {
   FRI: '금',
 };
 
-interface TimetableItem {
-  courseId: number;
-  period: number;
-  day: string;
-  semester: string;
-}
-
 const useTimetableData = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
   const [timetableData, setTimetableData] = useState<TimetableData>({});
-  const [loading, setLoading] = useState(true);
 
-  const { fetchCourses, fetchTimetable, updateTimetable, deleteTimetableItem } =
-    useTimetableApi();
+  const {
+    courses,
+    timetableItems,
+    isLoading,
+    updateTimetable,
+    deleteTimetableItem,
+  } = useTimetableApi();
 
   const getColorForCourse = useCallback((courseId: number) => {
     const index = courseId % TIMETABLE_COLORS.length;
     return TIMETABLE_COLORS[index];
   }, []);
 
-  const loadCourses = useCallback(async () => {
-    const coursesData = await fetchCourses();
-    setCourses(coursesData);
-    setLoading(false);
-  }, [fetchCourses]);
+  useEffect(() => {
+    if (!timetableItems || timetableItems.length === 0) return;
 
-  const loadTimetable = useCallback(
-    async (currentCourses: Course[]) => {
-      if (currentCourses.length === 0) return;
+    const newTimetableData: TimetableData = {};
 
-      const timetableItems = await fetchTimetable();
-      const newTimetableData: TimetableData = {};
+    timetableItems.forEach((item) => {
+      const day = DAY_MAPPING[item.day] || item.day.toLowerCase();
+      if (!newTimetableData[day]) {
+        newTimetableData[day] = {};
+      }
 
-      timetableItems.forEach((item: TimetableItem) => {
-        const day = DAY_MAPPING[item.day] || item.day.toLowerCase();
-        if (!newTimetableData[day]) {
-          newTimetableData[day] = {};
-        }
+      const course = courses.find((c) => c.courseId === item.courseId);
+      if (course) {
+        newTimetableData[day][item.period] = {
+          name: item.courseName || course.courseName,
+          color: getColorForCourse(course.courseId),
+          type: course.courseType as '공통' | '선택',
+          code: course.courseId.toString(),
+          semester: course.semester,
+          department: course.courseArea,
+          description: course.description,
+        };
+      }
+    });
 
-        const course = currentCourses.find((c) => c.courseId === item.courseId);
-        if (course) {
-          newTimetableData[day][item.period.toString()] = {
-            name: course.courseName,
-            color: getColorForCourse(course.courseId),
-            type: course.courseType as '공통' | '선택',
-            code: course.courseId.toString(),
-            semester: item.semester,
-            department: course.courseArea,
-            description: course.description,
-          };
-        }
-      });
-
-      setTimetableData(newTimetableData);
-    },
-    [fetchTimetable, getColorForCourse]
-  );
+    setTimetableData(newTimetableData);
+  }, [courses, timetableItems, getColorForCourse]);
 
   const handleCourseUpdate = async (
     courseId: number,
     period: number,
     day: string
   ) => {
-    const success = await updateTimetable(courseId, period, day);
-    if (success) {
-      const course = courses.find((c) => c.courseId === courseId);
-      if (course) {
-        setTimetableData((prev) => {
-          const newData = { ...prev };
-          if (!newData[day]) {
-            newData[day] = {};
-          }
-          newData[day][period.toString()] = {
-            name: course.courseName,
-            color: getColorForCourse(course.courseId),
-            type: course.courseType as '공통' | '선택',
-            code: course.courseId.toString(),
-            semester: '2025',
-            department: course.courseArea,
-            description: course.description,
-          };
-          return newData;
-        });
-      }
-    }
+    await updateTimetable(courseId, period, day);
   };
 
   const handleCourseDelete = async (period: number, day: string) => {
-    const success = await deleteTimetableItem(period, day);
-    if (success) {
-      setTimetableData((prev) => {
-        const newData = { ...prev };
-        if (newData[day]) {
-          delete newData[day][period.toString()];
-        }
-        return newData;
-      });
-    }
+    await deleteTimetableItem(period, day);
   };
-
-  useEffect(() => {
-    loadCourses();
-  }, [loadCourses]);
-
-  useEffect(() => {
-    if (courses.length > 0) {
-      loadTimetable(courses);
-    }
-  }, [courses, loadTimetable]);
 
   return {
     courses,
     timetableData,
-    loading,
+    loading: isLoading,
     handleCourseUpdate,
     handleCourseDelete,
   };

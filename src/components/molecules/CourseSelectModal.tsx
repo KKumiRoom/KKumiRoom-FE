@@ -1,7 +1,9 @@
+import useUserData from '@/hooks/useUserData';
 import { Course } from '@/types/timetable';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Button from '../atoms/Button';
 import DropdownForm from '../organisms/DropdownForm';
+import CourseDetail from './CourseDetail';
 import Modal from './Modal';
 
 interface CourseSelectModalProps {
@@ -18,6 +20,20 @@ const CourseSelectModal = ({
   onClose,
 }: CourseSelectModalProps) => {
   const [selectedCourse, setSelectedCourse] = useState<number>(-1);
+  const { user } = useUserData();
+
+  const currentSemester = useMemo(() => {
+    const currentMonth = new Date().getMonth() + 1;
+    return currentMonth <= 8 ? 1 : 2;
+  }, []);
+
+  const filteredCourses = useMemo(() => {
+    if (!user || !user.grade) return courses;
+
+    const targetSemester = `${user.grade} ${currentSemester}학기`;
+
+    return courses.filter((course) => course.semester === targetSemester);
+  }, [courses, user, currentSemester]);
 
   const handleCourseChange = (courseId: number) => {
     setSelectedCourse(courseId);
@@ -39,13 +55,25 @@ const CourseSelectModal = ({
           placeholder='수업'
           value={selectedCourse}
           onChange={handleCourseChange}
-          options={courses.map((course) => ({
+          options={filteredCourses.map((course) => ({
             id: course.courseId,
             name: course.courseName,
           }))}
         />
         <div className='h-32 flex flex-col justify-center items-center'>
-          <p>로고</p>
+          {selectedCourse === -1 ? (
+            <p>수업을 선택해 주세요</p>
+          ) : (
+            <div className='w-full'>
+              <CourseDetail
+                course={
+                  filteredCourses.find(
+                    (course) => course.courseId === selectedCourse
+                  )!
+                }
+              />
+            </div>
+          )}
         </div>
         <div className='flex justify-end gap-2 mt-4'>
           <Button onClick={onClose} variant='gray'>
