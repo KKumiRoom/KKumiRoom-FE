@@ -18,7 +18,7 @@ interface TimetableItem {
   semester: string;
 }
 
-const useTimetableData = (schoolId: string, timetableId: number) => {
+const useTimetableData = (schoolId: string) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [timetableData, setTimetableData] = useState<TimetableData>({});
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
     async (currentCourses: Course[]) => {
       if (currentCourses.length === 0) return;
 
-      const timetableItems = await fetchTimetable(timetableId);
+      const timetableItems = await fetchTimetable();
       const newTimetableData: TimetableData = {};
 
       timetableItems.forEach((item: TimetableItem) => {
@@ -67,7 +67,7 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
 
       setTimetableData(newTimetableData);
     },
-    [fetchTimetable, timetableId, getColorForCourse]
+    [fetchTimetable, getColorForCourse]
   );
 
   const handleCourseUpdate = async (
@@ -75,7 +75,7 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
     period: number,
     day: string
   ) => {
-    const success = await updateTimetable(timetableId, courseId, period, day);
+    const success = await updateTimetable(courseId, period, day);
     if (success) {
       const course = courses.find((c) => c.courseId === courseId);
       if (course) {
@@ -100,7 +100,7 @@ const useTimetableData = (schoolId: string, timetableId: number) => {
   };
 
   const handleCourseDelete = async (period: number, day: string) => {
-    const success = await deleteTimetableItem(timetableId, period, day);
+    const success = await deleteTimetableItem(period, day);
     if (success) {
       setTimetableData((prev) => {
         const newData = { ...prev };

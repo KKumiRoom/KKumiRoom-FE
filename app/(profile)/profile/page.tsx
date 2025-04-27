@@ -3,7 +3,6 @@
 import ProfileInfoSection from '@/components/organisms/ProfileInfoSection';
 import ProfileRoadmapCard from '@/components/organisms/ProfileRoadmapCard';
 import ProfileTop from '@/components/organisms/ProfileTop';
-import { useState } from 'react';
 
 const profileInfo = {
   name: '김철수',
@@ -18,13 +17,12 @@ const profileInfo = {
 };
 
 const ProfilePage = () => {
-  const [isEditing, setIsEditing] = useState(false);
   return (
     <div className='flex flex-col items-center'>
       <ProfileTop
         name={profileInfo.name}
         image={profileInfo.profileImage}
-        onEditClick={() => setIsEditing(!isEditing)}
+        onEditClick={() => {}}
         onSignOut={() => {}}
       />
       <div className='w-[90%] mt-6 mb-10'>

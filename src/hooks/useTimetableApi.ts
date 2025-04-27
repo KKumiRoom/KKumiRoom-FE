@@ -39,55 +39,41 @@ const useTimetableApi = () => {
     []
   );
 
-  const fetchTimetable = useCallback(
-    async (timetableId: number): Promise<TimetableItem[]> => {
-      try {
-        const response = await fetch(
-          `${API_URL}/api/openapi/timeTable/${timetableId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+  const fetchTimetable = useCallback(async (): Promise<TimetableItem[]> => {
+    try {
+      const response = await fetch(`${API_URL}/api/openapi/timeTable`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch timetable');
-        }
-
-        const data = await response.json();
-        return data.data || [];
-      } catch {
-        ErrorToast('시간표 정보를 불러오는데 실패했습니다.');
-        return [];
+      if (!response.ok) {
+        throw new Error('Failed to fetch timetable');
       }
-    },
-    []
-  );
+
+      const data = await response.json();
+      return data.data || [];
+    } catch {
+      ErrorToast('시간표 정보를 불러오는데 실패했습니다.');
+      return [];
+    }
+  }, []);
 
   const updateTimetable = useCallback(
-    async (
-      timetableId: number,
-      courseId: number,
-      period: number,
-      day: string
-    ): Promise<boolean> => {
+    async (courseId: number, period: number, day: string): Promise<boolean> => {
       try {
-        const response = await fetch(
-          `${API_URL}/api/openapi/timeTable/${timetableId}`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              courseId,
-              period,
-              day,
-            }),
-          }
-        );
+        const response = await fetch(`${API_URL}/api/openapi/timeTable`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            courseId,
+            period,
+            day,
+          }),
+        });
 
         if (!response.ok) {
           throw new Error('Failed to update timetable');
@@ -103,25 +89,18 @@ const useTimetableApi = () => {
   );
 
   const deleteTimetableItem = useCallback(
-    async (
-      timetableId: number,
-      period: number,
-      day: string
-    ): Promise<boolean> => {
+    async (period: number, day: string): Promise<boolean> => {
       try {
-        const response = await fetch(
-          `${API_URL}/api/openapi/timeTable/${timetableId}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              period,
-              day,
-            }),
-          }
-        );
+        const response = await fetch(`${API_URL}/api/openapi/timeTable`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            period,
+            day,
+          }),
+        });
 
         if (!response.ok) {
           throw new Error('Failed to delete timetable item');

@@ -6,14 +6,14 @@
   --foreground: #464646;
   --primary: #61b89f;
   --secondary: #b1cde2;
-  --tertiary: #839aa8;
+  --tertiary: #d3ebcd;
   --cloud: #fdfdfd;
   --card: #d3ebcd;
   --grey: #aaaaaa;
   --warning: #e90061;
   --confirm: #6a8dff;
   --lemon: #ffd65a;
-  --mint: #aedbce;
+  --mint: #9acebf;
   --device-width: 390px;
   --device-height: 844px;
   --outer-background: #ffffff;
@@ -79,4 +79,14 @@ body {
   overflow-x: hidden;
   background: var(--background);
   -webkit-overflow-scrolling: touch;
+}
+
+/* 스크롤바 숨김 */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

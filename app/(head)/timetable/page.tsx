@@ -16,7 +16,7 @@ const TimetablePage = () => {
     loading,
     handleCourseUpdate,
     handleCourseDelete,
-  } = useTimetableData('7010117', 1);
+  } = useTimetableData('7010117');
 
   if (loading) {
     return <div>로딩 중...</div>;
