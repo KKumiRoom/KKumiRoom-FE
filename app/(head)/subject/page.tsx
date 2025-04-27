@@ -12,24 +12,25 @@ import { useCallback, useEffect, useState } from 'react';
 export default function SubjectPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
-  const { fetchSubjects } = useSubjectApi();
+  const { subjects: fetchedSubjects } = useSubjectApi();
 
   useEffect(() => {
     const loadSubjects = async () => {
-      const courses = await fetchSubjects('7010117');
-      const convertedSubjects: Subject[] = courses.map((course: Course) => ({
-        name: course.courseName,
-        type: course.courseType as '공통' | '선택',
-        code: course.courseId.toString(),
-        department: course.courseArea,
-        description: course.description,
-        semester: course.semester,
-      }));
+      const convertedSubjects: Subject[] = fetchedSubjects.map(
+        (course: Course) => ({
+          name: course.courseName,
+          type: course.courseType as '공통' | '선택',
+          code: course.courseId.toString(),
+          department: course.courseArea,
+          description: course.description,
+          semester: course.semester,
+        })
+      );
       setSubjects(convertedSubjects);
       setLoading(false);
     };
     loadSubjects();
-  }, [fetchSubjects]);
+  }, [fetchedSubjects]);
 
   const {
     searchQuery,

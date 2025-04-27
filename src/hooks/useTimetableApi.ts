@@ -12,32 +12,26 @@ interface TimetableItem {
 }
 
 const useTimetableApi = () => {
-  const fetchCourses = useCallback(
-    async (schoolId: string): Promise<Course[]> => {
-      try {
-        const response = await fetch(
-          `${API_URL}/api/courses?schoolId=${schoolId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+  const fetchCourses = useCallback(async (): Promise<Course[]> => {
+    try {
+      const response = await fetch(`${API_URL}/api/courses`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch courses');
-        }
-
-        const data = await response.json();
-        return data.data || [];
-      } catch {
-        ErrorToast('수업 목록을 불러오는데 실패했습니다.');
-        return [];
+      if (!response.ok) {
+        throw new Error('Failed to fetch courses');
       }
-    },
-    []
-  );
+
+      const data = await response.json();
+      return data.data || [];
+    } catch {
+      ErrorToast('수업 목록을 불러오는데 실패했습니다.');
+      return [];
+    }
+  }, []);
 
   const fetchTimetable = useCallback(async (): Promise<TimetableItem[]> => {
     try {

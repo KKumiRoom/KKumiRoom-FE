@@ -44,18 +44,22 @@ export default function TodayClassesSection({
         ref={scrollContainerRef}
         className='flex gap-2 overflow-x-auto scrollbar-hide py-2'
       >
-        {todayClasses.length > 0
-          ? todayClasses.map((course) => (
-              <CourseInfoCell
-                key={course.courseId}
-                courseId={course.courseId}
-                courseName={course.courseName}
-                courseType={course.courseType || '공통'}
-                period={course.period}
-                status={getBadgeVariant(course.period)}
-              />
-            ))
-          : null}
+        {todayClasses.length > 0 ? (
+          todayClasses.map((course) => (
+            <CourseInfoCell
+              key={course.courseId}
+              courseId={course.courseId}
+              courseName={course.courseName}
+              courseType={course.courseType || '공통'}
+              period={course.period}
+              status={getBadgeVariant(course.period)}
+            />
+          ))
+        ) : (
+          <div className='text-sm text-center w-full'>
+            오늘은 수업이 없어요!
+          </div>
+        )}
       </div>
     </div>
   );

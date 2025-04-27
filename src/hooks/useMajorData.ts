@@ -1,5 +1,6 @@
 import { ApiResponse } from '@/types/ApiResponse';
-import { useEffect, useState } from 'react';
+import { fetcher } from '@/lib/utils/api';
+import { useData } from './useFetch';
 
 export interface MajorInfo {
   majorId: number;
@@ -16,73 +17,52 @@ export interface MajorDetailInfo {
   careerPath: string;
 }
 
-// 계열별 학과 목록을 가져오는 함수
-export const fetchMajorsByArea = async (majorArea: string) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-  const response = await fetch(
-    `${apiUrl}/api/major/area?majorArea=${encodeURIComponent(majorArea)}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch majors');
+/**
+ * 학과 영역별 목록을 가져오는 함수 (Promise 기반)
+ */
+export const fetchMajorsByArea = async (
+  majorArea: string
+): Promise<MajorInfo[]> => {
+  try {
+    const url = `${API_URL}/api/major/area?majorArea=${encodeURIComponent(majorArea)}`;
+    const response = await fetcher<ApiResponse<MajorInfo[]>>(url);
+    return response.data || [];
+  } catch (error) {
+    console.error('학과 정보 조회 에러:', error);
+    return [];
   }
-
-  const data: ApiResponse<MajorInfo[]> = await response.json();
-  return data.data || [];
 };
 
-// 학과 상세 정보를 가져오는 훅
+export const useMajorsByArea = (majorArea: string | null) => {
+  const url = majorArea
+    ? `${API_URL}/api/major/area?majorArea=${encodeURIComponent(majorArea)}`
+    : null;
+
+  const { data, isLoading, isError } = useData<ApiResponse<MajorInfo[]>>(url);
+
+  return {
+    majors: data?.data || [],
+    isLoading,
+    isError,
+  };
+};
+
+/**
+ * 학과 상세 정보를 가져오는 SWR 기반 훅
+ */
 export const useMajorDetail = (majorId: number | null) => {
-  const [loading, setLoading] = useState(false);
-  const [majorDetail, setMajorDetail] = useState<MajorDetailInfo | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const url = majorId ? `${API_URL}/api/major/${majorId}` : null;
 
-  useEffect(() => {
-    const fetchMajorDetail = async () => {
-      if (!majorId) {
-        setMajorDetail(null);
-        return;
-      }
+  const { data, isLoading, isError, error } =
+    useData<ApiResponse<MajorDetailInfo>>(url);
 
-      setLoading(true);
-      setError(null);
-
-      try {
-        const apiUrl =
-          process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
-        const response = await fetch(`${apiUrl}/api/major/${majorId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch major details');
-        }
-
-        const data: ApiResponse<MajorDetailInfo> = await response.json();
-        setMajorDetail(data.data || null);
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : '학과 정보를 불러오는데 실패했습니다.'
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMajorDetail();
-  }, [majorId]);
-
-  return { majorDetail, loading, error };
+  return {
+    majorDetail: data?.data || null,
+    loading: isLoading,
+    error: isError
+      ? error?.message || '학과 정보를 불러오는데 실패했습니다.'
+      : null,
+  };
 };

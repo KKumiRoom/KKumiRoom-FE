@@ -17,7 +17,7 @@ interface TimetableItem {
   semester: string;
 }
 
-const useTimetableData = (schoolId: string) => {
+const useTimetableData = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [timetableData, setTimetableData] = useState<TimetableData>({});
   const [loading, setLoading] = useState(true);
@@ -31,10 +31,10 @@ const useTimetableData = (schoolId: string) => {
   }, []);
 
   const loadCourses = useCallback(async () => {
-    const coursesData = await fetchCourses(schoolId);
+    const coursesData = await fetchCourses();
     setCourses(coursesData);
     setLoading(false);
-  }, [fetchCourses, schoolId]);
+  }, [fetchCourses]);
 
   const loadTimetable = useCallback(
     async (currentCourses: Course[]) => {

@@ -1,5 +1,5 @@
 import { DEPARTMENT_TYPES } from '@/constants/departmentData';
-import { fetchMajorsByArea } from '@/hooks/useMajorData';
+import { fetchMajorsByArea, MajorInfo } from '@/hooks/useMajorData';
 import { useEffect, useState } from 'react';
 import { ErrorToast } from '@/lib/utils/notifications';
 import DropdownForm from '../organisms/DropdownForm';
@@ -37,7 +37,7 @@ const SubjectFilterForm = ({
       const selectedArea = DEPARTMENT_TYPES.find((type) => type.id === id);
       if (selectedArea) {
         const majors = await fetchMajorsByArea(selectedArea.name);
-        const options = majors.map((major) => ({
+        const options = majors.map((major: MajorInfo) => ({
           id: major.majorId,
           name: major.name,
         }));
@@ -45,7 +45,7 @@ const SubjectFilterForm = ({
 
         if (initialMajor) {
           const matchingMajor = options.find(
-            (opt) => opt.name === initialMajor
+            (opt: Option) => opt.name === initialMajor
           );
           if (matchingMajor) {
             setSelectedDepartment(matchingMajor.id);
@@ -73,26 +73,26 @@ const SubjectFilterForm = ({
           // 모든 계열의 학과 정보를 병렬로 가져옴
           const allMajorsPromises = DEPARTMENT_TYPES.map((type) =>
             fetchMajorsByArea(type.name)
-              .then((majors) => ({ type, majors }))
-              .catch(() => ({ type, majors: [] }))
+              .then((majors: MajorInfo[]) => ({ type, majors }))
+              .catch(() => ({ type, majors: [] as MajorInfo[] }))
           );
 
           const results = await Promise.all(allMajorsPromises);
 
           // 일치하는 학과 찾기
           const matchingResult = results.find(({ majors }) =>
-            majors.some((major) => major.name === initialMajor)
+            majors.some((major: MajorInfo) => major.name === initialMajor)
           );
 
           if (matchingResult) {
             const { type, majors } = matchingResult;
             const matchingMajor = majors.find(
-              (major) => major.name === initialMajor
+              (major: MajorInfo) => major.name === initialMajor
             );
 
             if (matchingMajor) {
               setSelectedType(type.id);
-              const options = majors.map((major) => ({
+              const options = majors.map((major: MajorInfo) => ({
                 id: major.majorId,
                 name: major.name,
               }));
