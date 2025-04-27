@@ -5,42 +5,22 @@ import SubjectList from '@/components/organisms/SubjectList';
 import useSubjectApi from '@/hooks/useSubjectApi';
 import useSubjectFilter from '@/hooks/useSubjectFilter';
 import useSubjectSearch from '@/hooks/useSubjectSearch';
-import { Subject } from '@/types/subject';
 import { Course } from '@/types/timetable';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function SubjectPage() {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
-  const { subjects: fetchedSubjects } = useSubjectApi();
-
-  useEffect(() => {
-    const loadSubjects = async () => {
-      const convertedSubjects: Subject[] = fetchedSubjects.map(
-        (course: Course) => ({
-          name: course.courseName,
-          type: course.courseType as '공통' | '선택',
-          code: course.courseId.toString(),
-          department: course.courseArea,
-          description: course.description,
-          semester: course.semester,
-        })
-      );
-      setSubjects(convertedSubjects);
-      setLoading(false);
-    };
-    loadSubjects();
-  }, [fetchedSubjects]);
+  const { subjects: courses, isLoading } = useSubjectApi();
 
   const {
     searchQuery,
     setSearchQuery,
     searchResults,
-    isLoading,
+    isLoading: isSearching,
     handleSearchSubmit,
-  } = useSubjectSearch<Subject>({
-    initialData: subjects,
-    searchKeys: ['name', 'code'],
+  } = useSubjectSearch<Course>({
+    initialData: courses,
+    searchKeys: ['courseName', 'courseId'],
   });
 
   const {
@@ -50,9 +30,9 @@ export default function SubjectPage() {
     setSortType,
     setFilterType,
     resetFilters,
-  } = useSubjectFilter<Subject>({
+  } = useSubjectFilter<Course>({
     data: searchResults,
-    filterKey: 'type',
+    filterKey: 'courseType',
   });
 
   // 검색어 변경 핸들러
@@ -83,6 +63,12 @@ export default function SubjectPage() {
     resetFilters();
   }, [resetFilters]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      setLoading(false);
+    }
+  }, [isLoading]);
+
   if (loading) {
     return <div>로딩 중...</div>;
   }
@@ -101,7 +87,7 @@ export default function SubjectPage() {
       />
 
       <div className='mt-12 pt-4'>
-        <SubjectList subjects={filteredData} isLoading={isLoading} />
+        <SubjectList courses={filteredData} isLoading={isSearching} />
       </div>
     </div>
   );

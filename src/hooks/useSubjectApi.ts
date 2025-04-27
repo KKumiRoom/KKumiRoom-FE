@@ -5,15 +5,16 @@ import { useData } from './useFetch';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 const useSubjectApi = () => {
-  const { data, isLoading, isError, mutate } = useData<ApiResponse<Course[]>>(
-    `${API_URL}/api/courses`
-  );
-
-  return {
-    subjects: data?.data || [],
+  const {
+    data: coursesResponse,
     isLoading,
     isError,
-    mutate,
+  } = useData<ApiResponse<Course[]>>(`${API_URL}/api/courses`);
+
+  return {
+    subjects: coursesResponse?.data || [],
+    isLoading,
+    isError,
   };
 };
 

@@ -6,7 +6,7 @@ interface CourseDetailProps {
 
 export default function CourseDetail({ course }: CourseDetailProps) {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col gap-5'>
       <div className='flex justify-between'>
         <p className='text-grey'>개설학기</p>
         <p>{course.semester}</p>

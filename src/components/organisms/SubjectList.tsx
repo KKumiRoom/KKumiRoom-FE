@@ -1,11 +1,11 @@
 'use client';
 
 import SubjectInfoCard from '@/components/molecules/SubjectInfoCard';
-import { Subject } from '@/types/subject';
+import { Course } from '@/types/timetable';
 import React from 'react';
 
 interface SubjectListProps {
-  subjects: Subject[];
+  courses: Course[];
   isLoading?: boolean;
 }
 
@@ -13,7 +13,7 @@ interface SubjectListProps {
  * 과목 목록 표시 전용 컴포넌트
  * 과목 데이터를 카드 형태로 렌더링하는 책임만 담당
  */
-const SubjectList = ({ subjects, isLoading }: SubjectListProps) => {
+const SubjectList = ({ courses, isLoading }: SubjectListProps) => {
   if (isLoading) {
     return (
       <div className='flex justify-center items-center py-8'>
@@ -22,7 +22,7 @@ const SubjectList = ({ subjects, isLoading }: SubjectListProps) => {
     );
   }
 
-  if (subjects.length === 0) {
+  if (courses.length === 0) {
     return (
       <div className='flex justify-center items-center py-8'>
         <p className='text-gray-500'>검색 결과가 없습니다.</p>
@@ -32,12 +32,12 @@ const SubjectList = ({ subjects, isLoading }: SubjectListProps) => {
 
   return (
     <div className='flex flex-col gap-3'>
-      {subjects.map((subject) => (
+      {courses.map((course) => (
         <SubjectInfoCard
-          key={subject.code}
-          title={subject.name}
-          type={subject.type}
-          code={subject.code}
+          key={course.courseId.toString()}
+          title={course.courseName}
+          type={course.courseType as '공통' | '선택'}
+          code={course.courseId.toString()}
         />
       ))}
     </div>

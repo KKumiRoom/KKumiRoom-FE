@@ -1,79 +1,52 @@
 'use client';
 
 import BottomSheet from '@/components/molecules/BottomSheet';
+import CourseDetail from '@/components/molecules/CourseDetail';
 import useSubjectApi from '@/hooks/useSubjectApi';
-import { Subject } from '@/types/subject';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const SubjectDetailPage = () => {
   const params = useParams();
   const subjectCode = params.subjectCode as string;
-  const [subject, setSubject] = useState<Subject | null>(null);
   const [loading, setLoading] = useState(true);
   const { subjects } = useSubjectApi();
 
+  // 과목 정보 찾기
+  const subject = subjects.find((c) => c.courseId.toString() === subjectCode);
+
   useEffect(() => {
-    const loadSubject = async () => {
-      const foundCourse = subjects.find(
-        (c) => c.courseId.toString() === subjectCode
-      );
-
-      if (foundCourse) {
-        setSubject({
-          name: foundCourse.courseName,
-          type: foundCourse.courseType as '공통' | '선택',
-          code: foundCourse.courseId.toString(),
-          department: foundCourse.courseArea,
-          description: foundCourse.description,
-          semester: foundCourse.semester,
-        });
-      }
+    if (subjects && subjects.length > 0) {
       setLoading(false);
-    };
-    loadSubject();
-  }, [subjectCode, subjects]);
+    }
+  }, [subjects]);
 
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (!subject) {
-    return <div>과목을 찾을 수 없습니다.</div>;
+  if (!subject || loading) {
+    return (
+      <div className='flex-1 flex flex-col items-center justify-center mt-20'>
+        <div className='w-10 h-10 border-t-2 border-b-2 border-grey rounded-full animate-spin' />
+      </div>
+    );
   }
 
   return (
     <>
-      <div className='flex-1 flex flex-col items-center justify-center min-h-[30vh]'>
-        <h1 className='text-3xl font-bold mb-2'>{subject.name}</h1>
+      <div className='flex-1 flex flex-col items-center justify-center mt-20'>
+        <h1 className='text-3xl font-bold mb-2'>{subject.courseName}</h1>
       </div>
 
-      <BottomSheet className='pb-20'>
-        <div className='py-8'>
-          <h2 className='text-2xl font-bold mb-6'>과목 정보</h2>
-
-          <div className='space-y-4'>
-            <div>
-              <h3 className='text-lg font-bold'>개설 학기</h3>
-              <p className='text-md'>{subject.semester}</p>
-            </div>
-
-            <div>
-              <h3 className='text-lg font-bold'>학과</h3>
-              <p className='text-md'>{subject.department}</p>
-            </div>
-
-            <div>
-              <h3 className='text-lg font-bold'>분류</h3>
-              <p className='text-md'>{`${subject.type}과목`}</p>
-            </div>
+      <BottomSheet className='pb-40'>
+        <div className='py-12'>
+          <div>
+            <h1 className='text-2xl font-bold mb-8'>과목정보</h1>
+            <CourseDetail course={subject} />
           </div>
 
-          <div className='mt-8'>
-            <h3 className='text-lg font-bold mb-2'>
-              우리 수업은 이렇게 배워요
+          <div className='mt-16'>
+            <h3 className='text-lg font-semibold pb-3 border-b border-grey/50'>
+              우리 수업은 이런걸 배워요
             </h3>
-            <p className='text-md'>{subject.description}</p>
+            <p className='text-md mt-5'>{subject.description}</p>
           </div>
         </div>
       </BottomSheet>
