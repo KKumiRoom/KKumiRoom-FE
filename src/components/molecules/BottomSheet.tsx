@@ -20,7 +20,7 @@ export default function BottomSheet({
         stiffness: 200,
         mass: 1,
       }}
-      className={`fixed bottom-0 left-0 right-0 bg-cloud rounded-t-[24px] ${className}`}
+      className={`fixed bottom-0 left-0 right-0 bg-cloud rounded-t-[24px] max-w-[var(--device-width)] mx-auto ${className}`}
     >
       <div className='w-[90%] mx-auto'>{children}</div>
     </motion.div>

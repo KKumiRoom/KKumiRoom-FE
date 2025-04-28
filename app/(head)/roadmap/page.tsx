@@ -6,11 +6,11 @@ import SubjectSectionSkeleton from '@/components/molecules/SubjectSectionSkeleto
 import { SECTION_TYPES } from '@/constants/departmentData';
 import { useMajorDetail } from '@/hooks/useMajorData';
 import useUserData from '@/hooks/useUserData';
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 
 const RoadmapContent = () => {
   const [selectedMajorId, setSelectedMajorId] = useState<number | null>(null);
-  const { user } = useUserData();
+  const { user, isLoading: userLoading } = useUserData();
 
   const { majorDetail, loading } = useMajorDetail(selectedMajorId);
 
@@ -18,12 +18,18 @@ const RoadmapContent = () => {
     setSelectedMajorId(majorId);
   };
 
+  useEffect(() => {
+    if (!userLoading && user?.interestMajor?.majorId && !selectedMajorId) {
+      setSelectedMajorId(user.interestMajor.majorId);
+    }
+  }, [user, userLoading, selectedMajorId]);
+
   return (
     <div className='flex flex-col gap-8 py-2'>
       <div>
         <h1 className='text-xl font-semibold mb-4'>학과별 과목안내</h1>
         <SubjectFilterForm
-          initialMajor={user.interestMajor?.majorName}
+          initialMajorId={user?.interestMajor?.majorId}
           onMajorSelect={handleMajorSelect}
         />
       </div>

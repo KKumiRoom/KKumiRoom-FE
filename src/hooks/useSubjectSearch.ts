@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import useDebounce from './useDebounce';
 
 interface UseSubjectSearchProps<T> {
@@ -27,10 +27,22 @@ function useSubjectSearch<T>({
   const [searchResults, setSearchResults] = useState<T[]>(initialData);
   const [isLoading, setIsLoading] = useState(false);
 
+  // 초기 데이터에 대한 참조를 저장하여 불필요한 리렌더링 방지
+  const initialDataRef = useRef(initialData);
+
+  // 초기 데이터가 변경되면 참조를 업데이트
+  useEffect(() => {
+    initialDataRef.current = initialData;
+    // 검색어가 비어있을 때만 결과 업데이트
+    if (!searchQuery.trim()) {
+      setSearchResults(initialData);
+    }
+  }, [initialData, searchQuery]);
+
   const handleEmptyQuery = useCallback(() => {
-    setSearchResults(initialData);
+    setSearchResults(initialDataRef.current);
     setIsLoading(false);
-  }, [initialData]);
+  }, []); // 의존성 배열에서 initialData 제거
 
   const performSearch = useCallback(
     (query: string) => {
@@ -42,7 +54,7 @@ function useSubjectSearch<T>({
       setIsLoading(true);
 
       try {
-        const results = initialData.filter((item) =>
+        const results = initialDataRef.current.filter((item) =>
           searchKeys.some((key) => {
             const value = item[key];
             return (
@@ -58,7 +70,7 @@ function useSubjectSearch<T>({
         setIsLoading(false);
       }
     },
-    [initialData, searchKeys, handleEmptyQuery]
+    [searchKeys, handleEmptyQuery]
   );
 
   const { debounce, executeNow, cancelDebounce } = useDebounce(
@@ -95,12 +107,6 @@ function useSubjectSearch<T>({
 
     debounce(searchQuery);
   }, [searchQuery, debounce, handleEmptyQuery]);
-
-  useEffect(() => {
-    if (!searchQuery.trim()) {
-      setSearchResults(initialData);
-    }
-  }, [initialData, searchQuery]);
 
   return {
     searchQuery,

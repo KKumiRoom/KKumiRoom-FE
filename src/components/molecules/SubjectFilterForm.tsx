@@ -12,12 +12,14 @@ interface Option {
 export interface SubjectFilterFormProps {
   className?: string;
   initialMajor?: string;
+  initialMajorId?: number;
   onMajorSelect: (majorId: number) => void;
 }
 
 const SubjectFilterForm = ({
   className = '',
   initialMajor,
+  initialMajorId,
   onMajorSelect,
 }: SubjectFilterFormProps) => {
   const [selectedType, setSelectedType] = useState<number>(-1);
@@ -43,6 +45,19 @@ const SubjectFilterForm = ({
         }));
         setDepartmentOptions(options);
 
+        // 초기 학과 ID가 있는 경우 선택
+        if (initialMajorId && initialMajorId > 0) {
+          const matchingMajor = options.find(
+            (opt: Option) => opt.id === initialMajorId
+          );
+          if (matchingMajor) {
+            setSelectedDepartment(matchingMajor.id);
+            onMajorSelect(matchingMajor.id);
+            return;
+          }
+        }
+
+        // 초기 학과명이 있는 경우 선택
         if (initialMajor) {
           const matchingMajor = options.find(
             (opt: Option) => opt.name === initialMajor
@@ -66,7 +81,48 @@ const SubjectFilterForm = ({
   };
 
   useEffect(() => {
-    if (initialMajor && selectedType === -1) {
+    // 초기 학과 ID가 있는 경우
+    if (initialMajorId && initialMajorId > 0 && selectedType === -1) {
+      const fetchMajorData = async () => {
+        try {
+          const allMajorsPromises = DEPARTMENT_TYPES.map((type) =>
+            fetchMajorsByArea(type.name)
+              .then((majors: MajorInfo[]) => ({ type, majors }))
+              .catch(() => ({ type, majors: [] as MajorInfo[] }))
+          );
+
+          const results = await Promise.all(allMajorsPromises);
+
+          const matchingResult = results.find(({ majors }) =>
+            majors.some((major: MajorInfo) => major.majorId === initialMajorId)
+          );
+
+          if (matchingResult) {
+            const { type, majors } = matchingResult;
+            const matchingMajor = majors.find(
+              (major: MajorInfo) => major.majorId === initialMajorId
+            );
+
+            if (matchingMajor) {
+              setSelectedType(type.id);
+              const options = majors.map((major: MajorInfo) => ({
+                id: major.majorId,
+                name: major.name,
+              }));
+              setDepartmentOptions(options);
+              setSelectedDepartment(matchingMajor.majorId);
+              onMajorSelect(matchingMajor.majorId);
+            }
+          }
+        } catch (error) {
+          ErrorToast(`에러가 발생했습니다: ${error}`);
+        }
+      };
+
+      fetchMajorData();
+    }
+    // 초기 학과명이 있는 경우 (기존 로직)
+    else if (initialMajor && selectedType === -1 && !initialMajorId) {
       const fetchInitialMajor = async () => {
         try {
           const allMajorsPromises = DEPARTMENT_TYPES.map((type) =>
@@ -105,7 +161,7 @@ const SubjectFilterForm = ({
 
       fetchInitialMajor();
     }
-  }, [initialMajor, onMajorSelect, selectedType]);
+  }, [initialMajor, initialMajorId, onMajorSelect, selectedType]);
 
   return (
     <div className={`flex justify-between gap-4 ${className}`}>

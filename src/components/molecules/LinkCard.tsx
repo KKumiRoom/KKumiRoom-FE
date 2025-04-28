@@ -35,7 +35,7 @@ export default function LinkCard({
     <div className='w-full'>
       <Link href={href}>
         <div
-          className={`flex items-center gap-4 p-[0.875rem] rounded-xl shadow-sm cursor-pointer ${paperlogy.className} ${className}`}
+          className={`flex items-center gap-4 p-[0.875rem] rounded-xl shadow-md cursor-pointer ${paperlogy.className} ${className}`}
         >
           <div className='flex-shrink-0'>
             <div className='relative w-[3.75rem] h-[3.75rem]'>

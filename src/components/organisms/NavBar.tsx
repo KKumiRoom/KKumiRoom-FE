@@ -10,7 +10,7 @@ const NavBar = ({ activePage, onNavigate }: NavBarProps) => {
   const isActive = (page: Page) => activePage === page;
 
   return (
-    <div className='fixed bottom-0 left-0 right-0 w-full max-w-[var(--device-width)] mx-auto bg-background shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-10'>
+    <div className='fixed bottom-0 left-0 right-0 w-full max-w-[var(--device-width)] mx-auto bg-background shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50'>
       <nav className='flex items-center justify-between w-[90%] mx-auto p-2'>
         {NAVIGATION_ITEMS.map((item) => {
           const Icon = item.icon;
