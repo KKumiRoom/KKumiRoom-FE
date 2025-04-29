@@ -35,19 +35,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (path.startsWith('/api') && !accessToken) {
-    return new NextResponse(JSON.stringify({ message: '인증이 필요합니다' }), {
-      status: 401,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-
   if (!accessToken) {
     url.pathname = '/login';
     url.searchParams.set('redirect', request.nextUrl.pathname);
-
     return NextResponse.redirect(url);
   }
 

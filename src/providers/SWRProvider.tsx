@@ -68,26 +68,13 @@ export default function SWRProvider({ children }: SWRProviderProps) {
   return (
     <SWRConfig
       value={{
-        // 포커스 시 자동 재검증 (탭 전환 후 돌아올 때)
         revalidateOnFocus: true,
-
-        // 인터넷 연결 복구 시 자동 재검증
         revalidateOnReconnect: true,
-
-        // 같은 키에 대한 중복 요청 방지 (2초)
         dedupingInterval: 2000,
-
-        // 에러 발생 시 재시도 횟수
-        errorRetryCount: 3,
-
-        // 서스펜스 모드 비활성화 (Next.js 13+ 호환성)
+        errorRetryCount: 0,
         suspense: false,
-
-        // 전역 에러 처리기
         onError: globalErrorHandler,
-
-        // 요청 전 일괄 처리 활성화 (성능 최적화)
-        shouldRetryOnError: true,
+        shouldRetryOnError: false,
       }}
     >
       {children}

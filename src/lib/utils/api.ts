@@ -8,7 +8,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 /**
  * 액세스 토큰 갱신 함수
  */
-export const refreshAccessToken = async (): Promise<null> => {
+export const refreshAccessToken = async (): Promise<boolean> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/auth/refresh`, {
       method: 'POST',
@@ -16,15 +16,20 @@ export const refreshAccessToken = async (): Promise<null> => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to refresh access token');
+      // 토큰 갱신 실패 시에만 로그인으로 이동
+      if (!isServer()) {
+        window.location.href = '/login';
+      }
+      return false;
     }
-    return null;
+    return true; // 토큰 갱신 성공
   } catch (error) {
     ErrorToast(`토큰 갱신 중 오류가 발생했습니다 : ${error}`);
+    // 에러 발생 시에도 로그인으로 이동
     if (!isServer()) {
       window.location.href = '/login';
     }
-    return null;
+    return false;
   }
 };
 
@@ -32,32 +37,48 @@ export const refreshAccessToken = async (): Promise<null> => {
  * SWR에서 사용할 기본 fetcher 함수
  * API 응답 형식에 맞게 에러 처리 및 데이터 파싱
  */
-export const fetcher = async <T>(url: string, retryCount = 0): Promise<T> => {
-  // 최대 재시도 횟수 제한
-  const MAX_RETRIES = 1;
-
+export const fetcher = async <T>(url: string): Promise<T> => {
   const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
 
   const response = await fetch(fullUrl, {
-    credentials: 'include', // 쿠키 포함 (자동으로 액세스 토큰 전송)
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
-  // 토큰 관련 에러 처리
-  if (response.status === 403 && retryCount < MAX_RETRIES) {
-    await refreshAccessToken();
-    // 토큰 갱신 후 재시도 (재시도 횟수 증가)
-    return fetcher<T>(url, retryCount + 1);
+  // 토큰 만료 처리 (401)
+  if (response.status === 401) {
+    const refreshSuccess = await refreshAccessToken();
+
+    if (refreshSuccess) {
+      // 토큰 갱신 성공 시 재시도
+      const retryResponse = await fetch(fullUrl, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!retryResponse.ok) {
+        throw createApiError(
+          '요청 처리 중 오류가 발생했습니다',
+          retryResponse.status
+        );
+      }
+
+      return retryResponse.json();
+    }
+    // 토큰 갱신 실패 시 에러 throw (이미 refreshAccessToken에서 로그인으로 이동)
+    throw createApiError('토큰 갱신에 실패했습니다', 401);
   }
 
-  if (response.status === 401) {
-    // 인증 오류 전용 에러 처리
+  // 권한 없음 처리 (403)
+  if (response.status === 403) {
     if (!isServer()) {
       window.location.href = '/login';
     }
-    throw createApiError('인증이 필요합니다', 401);
+    throw createApiError('접근 권한이 없습니다', 403);
   }
 
   // 일반 에러 처리
