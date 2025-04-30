@@ -26,7 +26,7 @@ export default function ProfileRoadmapCard({
       image='/images/cardImage/think.png'
       title={`${majorName}에 가려면?`}
       description={`${majorName}에 가기위해 들어야할 수업에 대해 알아봐요.`}
-      href={`/roadmap/${majorId}`}
+      href='/roadmap'
       className='bg-cloud'
     />
   );

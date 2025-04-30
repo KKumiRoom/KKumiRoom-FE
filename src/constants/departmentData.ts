@@ -27,7 +27,7 @@ const SECTION_TYPES = {
   SUBJECTS: {
     icon: FaBook,
     variant: 'lemon',
-    title: '전공 과목',
+    title: '권장 과목',
   },
   RECOMMEND: {
     icon: FaUsers,

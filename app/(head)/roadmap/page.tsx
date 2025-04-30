@@ -27,7 +27,7 @@ const RoadmapContent = () => {
   return (
     <div className='flex flex-col gap-8 py-2'>
       <div>
-        <h1 className='text-xl font-semibold mb-4'>학과별 과목안내</h1>
+        <h1 className='text-xl font-semibold mb-4'>학과정보</h1>
         <SubjectFilterForm
           initialMajorId={user?.interestMajor?.majorId}
           onMajorSelect={handleMajorSelect}

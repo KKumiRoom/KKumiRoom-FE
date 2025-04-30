@@ -43,7 +43,7 @@ function RegisterPage() {
         <RegisterStepIndicator totalSteps={MAX_STEP} stepTitles={stepTitles} />
         <CurrentStepComponent />
       </div>
-      <div className='fixed bottom-[40px] left-0 right-0 w-[90%] mx-auto'>
+      <div className='fixed bottom-[40px] left-0 right-0 max-w-[var(--device-width)] mx-auto '>
         {displayErrorMessage && (
           <div className='mb-3'>
             <p className='text-warning text-sm text-center font-medium'>

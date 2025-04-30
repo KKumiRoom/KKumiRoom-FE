@@ -35,7 +35,7 @@ const SubjectDetailPage = () => {
         <h1 className='text-3xl font-bold mb-2'>{subject.courseName}</h1>
       </div>
 
-      <BottomSheet className='pb-40'>
+      <BottomSheet className='pb-40 max-h-[75vh]'>
         <div className='py-12'>
           <div>
             <h1 className='text-2xl font-bold mb-8'>과목정보</h1>

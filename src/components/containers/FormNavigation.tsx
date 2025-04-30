@@ -74,7 +74,7 @@ function FormNavigation({ onFirstStep }: FormNavigationProps) {
   };
 
   return (
-    <div className='flex gap-4'>
+    <div className='flex gap-4 w-[90%] mx-auto'>
       <Button
         fullWidth
         variant='gray'
