@@ -40,7 +40,6 @@ const SettingsMenu = () => {
         <MenuItem href='/setting/school' label='학교 정보 수정' />
         <MenuItem href='/setting/password' label='비밀번호 변경' />
         <MenuItem href='/setting/major' label='관심학과 등록/변경하기' />
-        <MenuItem label='로그아웃' onClick={handleLogout} />
       </div>
 
       <div className='border-b border-grey/50' />
@@ -48,6 +47,7 @@ const SettingsMenu = () => {
       <div className='flex flex-col gap-8 px-6 w-full'>
         <MenuItem href='/setting/policy' label='개인정보 보호정책' />
         <MenuItem href='/setting/appInfo' label='앱 정보' />
+        <MenuItem label='로그아웃' onClick={handleLogout} />
       </div>
     </>
   );

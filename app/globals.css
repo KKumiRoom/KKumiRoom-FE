@@ -53,6 +53,7 @@
 
 html,
 body {
+  overscroll-behavior: none;
   background: var(--outer-background);
   margin: 0;
   padding: 0;
