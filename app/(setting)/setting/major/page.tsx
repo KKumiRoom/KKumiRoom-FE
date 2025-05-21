@@ -4,7 +4,7 @@ import ButtonWithError from '@/components/molecules/ButtonWithError';
 import DropdownForm from '@/components/organisms/DropdownForm';
 import { DEPARTMENT_TYPES } from '@/constants/departmentData';
 import { fetchMajorsByArea, MajorInfo } from '@/hooks/useMajorData';
-import { useUserApi } from '@/hooks/useUserApi';
+import useUserApi from '@/hooks/useUserApi';
 import useUserData from '@/hooks/useUserData';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -92,8 +92,7 @@ export default function SettingMajorPage() {
       SuccessToast('관심학과가 변경되었습니다');
       router.back();
     } catch (error) {
-      ErrorToast('관심학과 변경에 실패했습니다');
-      setErrorMessage('관심학과 변경에 실패했습니다.');
+      ErrorToast(`관심학과 변경에 실패했습니다${error}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -111,8 +110,22 @@ export default function SettingMajorPage() {
           const userMajorId = user.interestMajor?.majorId;
           if (!userMajorId) return;
 
-          for (const type of DEPARTMENT_TYPES) {
-            const majors = await fetchMajorsByArea(type.name);
+          // Promise.all을 사용하여 병렬로 모든 계열의 학과 정보를 가져옴
+          const majorsByTypePromises = DEPARTMENT_TYPES.map((type) =>
+            fetchMajorsByArea(type.name)
+              .then((majors) => ({ type, majors }))
+              .catch(() => ({ type, majors: [] }))
+          );
+
+          const results = await Promise.all(majorsByTypePromises);
+
+          // 가져온 데이터에서 사용자의 학과 찾기
+          const matchingResult = results.find(({ majors }) =>
+            majors.some((major) => major.majorId === userMajorId)
+          );
+
+          if (matchingResult) {
+            const { type, majors } = matchingResult;
             const matchingMajor = majors.find(
               (major) => major.majorId === userMajorId
             );
@@ -125,7 +138,6 @@ export default function SettingMajorPage() {
               }));
               setDepartmentOptions(options);
               setSelectedDepartment(matchingMajor.majorId);
-              break;
             }
           }
         } catch (error) {
@@ -136,12 +148,6 @@ export default function SettingMajorPage() {
       fetchInitialMajor();
     }
   }, [user?.interestMajor?.majorId, userLoading]);
-
-  const selectedTypeName =
-    DEPARTMENT_TYPES.find((type) => type.id === selectedType)?.name || '';
-  const selectedDepartmentName =
-    departmentOptions.find((dept) => dept.id === selectedDepartment)?.name ||
-    '';
 
   return (
     <div className='flex flex-col gap-8'>

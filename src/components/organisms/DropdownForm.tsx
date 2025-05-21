@@ -2,7 +2,7 @@ import DropdownList from '@/components/atoms/DropdownList';
 import IconButton from '@/components/molecules/IconButton';
 import TitleInputWithButton from '@/components/molecules/TitleInputWithButton';
 import { FaAngleDown } from 'react-icons/fa6';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 
 interface Option {
   id: number;
@@ -34,9 +34,11 @@ const DropdownForm = ({
 }: DropdownFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedOption, setSelectedOption] = useState<Option | null>(() => {
-    return options.find((option) => option.id === value) || null;
-  });
+
+  const selectedOption = useMemo(
+    () => options.find((option) => option.id === value) || null,
+    [options, value]
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,13 +56,6 @@ const DropdownForm = ({
     };
   }, []);
 
-  useEffect(() => {
-    // 외부에서 value가 변경되면 selectedOption 업데이트
-    const newSelectedOption =
-      options.find((option) => option.id === value) || null;
-    setSelectedOption(newSelectedOption);
-  }, [value, options]);
-
   const toggleDropdown = useCallback(() => {
     if (!disabled) {
       setIsOpen((prev) => !prev);
@@ -69,7 +64,6 @@ const DropdownForm = ({
 
   const handleSelect = useCallback(
     (option: Option) => {
-      setSelectedOption(option);
       onChange(option.id);
       setIsOpen(false);
     },

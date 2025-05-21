@@ -4,10 +4,16 @@ interface UpdateInterestMajorRequest {
   majorName: string;
 }
 
+interface UpdateUserSchoolRequest {
+  schoolId: number;
+  classNum: string;
+  grade: string;
+}
+
 /**
  * 사용자 관련 API 호출을 위한 커스텀 훅
  */
-export function useUserApi() {
+export default function useUserApi() {
   const { create } = useDataMutation();
 
   /**
@@ -19,7 +25,17 @@ export function useUserApi() {
     return create<UpdateInterestMajorRequest, void>('/api/users/major', body);
   };
 
+  const updateUserSchool = async (
+    schoolId: number,
+    classNum: string,
+    grade: string
+  ) => {
+    const body: UpdateUserSchoolRequest = { schoolId, classNum, grade };
+    return create<UpdateUserSchoolRequest, void>('/api/users/school', body);
+  };
+
   return {
     updateInterestMajor,
+    updateUserSchool,
   };
 }
