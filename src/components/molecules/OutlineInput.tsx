@@ -9,7 +9,7 @@ type OutlineInputProps = Omit<
   onChange: (value: string) => void;
   className?: string;
   icon?: ReactElement<{ className?: string }>;
-  iconButton?: ReactElement<{ className?: string }>;
+  rightElement?: ReactElement<{ className?: string }>;
   error?: boolean;
   errorMessage?: string;
 };
@@ -22,7 +22,7 @@ const OutlineInput = forwardRef<HTMLInputElement, OutlineInputProps>(
       onChange,
       className = '',
       icon,
-      iconButton,
+      rightElement,
       error = false,
       errorMessage,
       // HTML input props
@@ -88,7 +88,7 @@ const OutlineInput = forwardRef<HTMLInputElement, OutlineInputProps>(
         <div className={inputWrapperClassName}>
           {icon && <Icon size='sm'>{icon}</Icon>}
           <input {...inputProps} />
-          {iconButton && iconButton}
+          {rightElement && rightElement}
         </div>
         {error && errorMessage && (
           <p id={errorId} className='text-warning text-sm' role='alert'>

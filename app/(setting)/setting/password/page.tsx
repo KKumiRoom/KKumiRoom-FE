@@ -60,7 +60,7 @@ export default function SettingPasswordPage() {
   };
 
   return (
-    <div className=''>
+    <div>
       <h1 className='text-lg font-semibold pt-2 pb-6'>비밀번호 변경</h1>
       <div className='flex flex-col gap-10'>
         <OutlineInput

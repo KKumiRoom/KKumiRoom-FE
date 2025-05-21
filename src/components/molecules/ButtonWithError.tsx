@@ -3,9 +3,14 @@ import Button from '../atoms/Button';
 type ButtonWithErrorProps = {
   errorMessage: string;
   onClick: () => void;
+  text?: string;
 };
 
-const ButtonWithError = ({ errorMessage, onClick }: ButtonWithErrorProps) => {
+const ButtonWithError = ({
+  errorMessage,
+  onClick,
+  text = '확인',
+}: ButtonWithErrorProps) => {
   return (
     <div className='fixed bottom-[40px] left-0 right-0 max-w-[var(--device-width)] mx-auto '>
       <div className='w-[90%] mx-auto'>
@@ -19,7 +24,7 @@ const ButtonWithError = ({ errorMessage, onClick }: ButtonWithErrorProps) => {
           type='submit'
           onClick={onClick}
         >
-          확인
+          {text}
         </Button>
       </div>
     </div>
