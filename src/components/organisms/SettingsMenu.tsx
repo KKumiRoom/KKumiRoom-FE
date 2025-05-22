@@ -1,6 +1,7 @@
 'use client';
 
 import Icon from '@/components/atoms/Icon';
+import useAuth from '@/hooks/useAuth';
 import { FaChevronRight } from 'react-icons/fa6';
 import Link from 'next/link';
 
@@ -32,7 +33,12 @@ const MenuItem = ({ href, label, onClick }: MenuItemProps) => {
 };
 
 const SettingsMenu = () => {
-  const handleLogout = () => {};
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <>
       <div className='flex flex-col gap-8 px-6 w-full'>
