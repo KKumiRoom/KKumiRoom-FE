@@ -24,29 +24,31 @@ const SubjectDetailPage = () => {
   if (!subject || loading) {
     return (
       <div className='flex-1 flex flex-col items-center justify-center mt-20'>
-        <div className='w-10 h-10 border-t-2 border-b-2 border-grey rounded-full animate-spin' />
+        <div className='w-10 h-10 border-t-2 border-b-2 border-primary rounded-full animate-spin' />
       </div>
     );
   }
 
   return (
     <>
-      <div className='flex-1 flex flex-col items-center justify-center mt-20'>
+      <div className='flex-1 flex flex-col items-center justify-center mt-16'>
         <h1 className='text-3xl font-bold mb-2'>{subject.courseName}</h1>
       </div>
 
-      <BottomSheet className='pb-40 max-h-[75vh]'>
+      <BottomSheet className='pb-40 max-h-[75vh] min-h-[75vh]'>
         <div className='py-12'>
-          <div>
+          <div className='border-b border-grey/50 pb-10'>
             <h1 className='text-2xl font-bold mb-8'>과목정보</h1>
             <CourseDetail course={subject} />
           </div>
 
-          <div className='mt-16'>
-            <h3 className='text-lg font-semibold pb-3 border-b border-grey/50'>
+          <div className='mt-8'>
+            <h3 className='text-lg font-semibold pb-3 '>
               우리 수업은 이런걸 배워요
             </h3>
-            <p className='text-md mt-5'>{subject.description}</p>
+            <p className='text-md mt-5 min-h-[100px] border border-grey/50 rounded-lg p-2 bg-background'>
+              {subject.description}
+            </p>
           </div>
         </div>
       </BottomSheet>
