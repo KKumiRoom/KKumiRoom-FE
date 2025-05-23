@@ -47,7 +47,7 @@ export default function TodayClassesSection({
         {todayClasses.length > 0 ? (
           todayClasses.map((course) => (
             <CourseInfoCell
-              key={course.courseId}
+              key={course.courseId + course.period}
               courseId={course.courseId}
               courseName={course.courseName}
               courseType={course.courseType || '공통'}
