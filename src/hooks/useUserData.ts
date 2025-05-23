@@ -16,7 +16,7 @@ export default function useUserData() {
     ? {
         userId: userData.data.userId,
         userName: userData.data.userName,
-        profileImage: '/images/user.png',
+        imageUrl: '/images/default-profile.png',
         birth: userData.data.birth,
         phone: userData.data.phone,
         address: userData.data.address,
@@ -32,7 +32,7 @@ export default function useUserData() {
     : {
         userId: 0,
         userName: '',
-        profileImage: '',
+        imageUrl: '',
         birth: '',
         phone: '',
         address: '',

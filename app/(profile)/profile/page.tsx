@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <ProfileTop name={user.userName} image={user.profileImage} />
+      <ProfileTop name={user.userName} image={user.imageUrl} />
       <div className='w-[90%] mt-8 mb-12'>
         <ProfileInfoSection
           profileData={{

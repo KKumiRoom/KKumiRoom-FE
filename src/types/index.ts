@@ -35,7 +35,7 @@ export type {
 export interface TUser {
   userId: number;
   userName: string;
-  profileImage: string;
+  imageUrl: string;
   birth: string;
   phone: string;
   address: string;

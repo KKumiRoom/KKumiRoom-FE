@@ -17,7 +17,7 @@ interface CircleImageProps {
  * @param className - 추가 스타일 클래스
  */
 function CircleImage({
-  src = '/images/DefaultProfile.png',
+  src,
   alt,
   size = 40,
   className = '',

@@ -8,9 +8,10 @@ const SettingProfile = () => {
   return (
     <div className='flex items-center gap-2 px-6'>
       <CircleImage
-        src={user.profileImage || '/images/user.png'}
+        src={user.imageUrl || '/images/default-profile.png'}
         alt='profile'
         size={40}
+        className='bg-cloud shadow-md'
       />
       <p className='text-lg font-semibold'>{user.userName}</p>
     </div>
