@@ -10,6 +10,13 @@ interface UpdateUserSchoolRequest {
   grade: string;
 }
 
+interface UpdateUserProfileRequest {
+  userName: string;
+  birth: string;
+  phone: string;
+  address: string;
+  imageUrl: string;
+}
 /**
  * 사용자 관련 API 호출을 위한 커스텀 훅
  */
@@ -34,8 +41,26 @@ export default function useUserApi() {
     return create<UpdateUserSchoolRequest, void>('/api/users/school', body);
   };
 
+  const updateUserProfile = async (
+    userName: string,
+    birth: string,
+    phone: string,
+    address: string,
+    imageUrl: string
+  ) => {
+    const body: UpdateUserProfileRequest = {
+      userName,
+      birth,
+      phone,
+      address,
+      imageUrl,
+    };
+    return create<UpdateUserProfileRequest, void>('/api/users/me', body);
+  };
+
   return {
     updateInterestMajor,
     updateUserSchool,
+    updateUserProfile,
   };
 }
