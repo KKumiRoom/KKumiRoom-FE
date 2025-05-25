@@ -68,9 +68,11 @@ export default function MajorInfoCard({ major }: MajorInfoCardProps) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              <h2 className='text-sm font-bold mb-1 text-center'>권장 과목</h2>
+              <h2 className='text-sm font-bold mb-1 text-center'>
+                핵심 권장 과목
+              </h2>
               <Link href='/roadmap'>
-                <p className='text-right text-[.5rem] font-regular text-grey'>
+                <p className='text-right text-[.5rem] font-regular text-grey mb-1'>
                   {'자세히보기 >'}
                 </p>
               </Link>

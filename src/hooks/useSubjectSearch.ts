@@ -37,7 +37,7 @@ function useSubjectSearch<T>({
     if (!searchQuery.trim()) {
       setSearchResults(initialData);
     }
-  }, [initialData, searchQuery]);
+  }, [initialData, searchQuery, setSearchResults]);
 
   const handleEmptyQuery = useCallback(() => {
     setSearchResults(initialDataRef.current);
