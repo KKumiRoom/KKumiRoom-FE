@@ -21,6 +21,7 @@ export default function SubjectPage() {
   } = useSubjectSearch<Course>({
     initialData: courses,
     searchKeys: ['courseName', 'courseId'],
+    isReady: !isLoading,
   });
 
   const {

@@ -1,12 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useDebounce from './useDebounce';
 
 interface UseSubjectSearchProps<T> {
   initialData: T[];
   searchKeys: (keyof T)[];
   debounceTime?: number;
+  isReady?: boolean;
 }
 
 interface UseSubjectSearchReturn<T> {
@@ -22,30 +23,29 @@ function useSubjectSearch<T>({
   initialData,
   searchKeys,
   debounceTime = 300,
+  isReady = true,
 }: UseSubjectSearchProps<T>): UseSubjectSearchReturn<T> {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<T[]>(initialData);
+  const [searchResults, setSearchResults] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 초기 데이터에 대한 참조를 저장하여 불필요한 리렌더링 방지
-  const initialDataRef = useRef(initialData);
-
-  // 초기 데이터가 변경되면 참조를 업데이트
+  // 데이터가 준비됐을 때만 초기화
   useEffect(() => {
-    initialDataRef.current = initialData;
-    // 검색어가 비어있을 때만 결과 업데이트
-    if (!searchQuery.trim()) {
+    if (isReady) {
       setSearchResults(initialData);
     }
-  }, [initialData, searchQuery, setSearchResults]);
+  }, [initialData, isReady]);
 
   const handleEmptyQuery = useCallback(() => {
-    setSearchResults(initialDataRef.current);
-    setIsLoading(false);
-  }, []); // 의존성 배열에서 initialData 제거
+    if (isReady) {
+      setSearchResults(initialData);
+      setIsLoading(false);
+    }
+  }, [initialData, isReady]);
 
   const performSearch = useCallback(
     (query: string) => {
+      if (!isReady) return;
       if (!query.trim()) {
         handleEmptyQuery();
         return;
@@ -54,7 +54,7 @@ function useSubjectSearch<T>({
       setIsLoading(true);
 
       try {
-        const results = initialDataRef.current.filter((item) =>
+        const results = initialData.filter((item) =>
           searchKeys.some((key) => {
             const value = item[key];
             return (
@@ -70,7 +70,7 @@ function useSubjectSearch<T>({
         setIsLoading(false);
       }
     },
-    [searchKeys, handleEmptyQuery]
+    [searchKeys, initialData, handleEmptyQuery, isReady]
   );
 
   const { debounce, executeNow, cancelDebounce } = useDebounce(

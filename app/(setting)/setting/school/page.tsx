@@ -33,7 +33,6 @@ const initializeFormState = (
 ) => {
   if (!user?.school?.schoolId) return null;
 
-  // for...of 루프 대신 Object.entries().find() 사용
   const matchingEntry = Object.entries(schoolsData).find(
     ([region, schools]) => {
       const matchingSchool = schools.find(
