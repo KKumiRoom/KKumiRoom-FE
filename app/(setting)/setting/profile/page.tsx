@@ -14,9 +14,6 @@ import { ErrorToast, SuccessToast } from '@/lib/utils/notifications';
 import { validateProfile } from '@/lib/validation/profileValidationRule';
 
 export default function SettingProfilePage() {
-  const [profileImage, setProfileImage] = useState(
-    '/images/default-profile.png'
-  );
   const [errorMessage, setErrorMessage] =
     useState('이전 사용자 정보와 같습니다');
   const [userFormState, setUserFormState] = useState({
@@ -24,6 +21,7 @@ export default function SettingProfilePage() {
     birth: '',
     phone: '',
     address: '',
+    imageUrl: '',
   });
   const { user } = useUserData();
   const { updateUserProfile } = useUserApi();
@@ -36,17 +34,11 @@ export default function SettingProfilePage() {
         birth: formatDate(user.birth),
         phone: formatPhoneNumber(user.phone),
         address: user.address,
+        imageUrl: user.imageUrl,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.userName, user?.birth, user?.phone, user?.address]);
-
-  const handleImageChange = (file: File) => {
-    const imageUrl = URL.createObjectURL(file);
-    setProfileImage(imageUrl);
-
-    // S3 이미지 업로드 로직 추가
-  };
+  }, [user?.userName, user?.birth, user?.phone, user?.address, user?.imageUrl]);
 
   const validateAndSetError = (field: string, value: string) => {
     const validationError = validateProfile(
@@ -54,34 +46,38 @@ export default function SettingProfilePage() {
       field === 'birth' ? value : userFormState.birth,
       field === 'phone' ? value : userFormState.phone,
       field === 'address' ? value : userFormState.address,
+      field === 'imageUrl' ? value : userFormState.imageUrl,
       user.userName,
       formatDate(user.birth),
       formatPhoneNumber(user.phone),
-      user.address
+      user.address,
+      user.imageUrl
     );
     setErrorMessage(validationError);
   };
 
-  const handleUserNameChange = (value: string) => {
-    setUserFormState({ ...userFormState, userName: value });
-    validateAndSetError('userName', value);
+  const handleImageChange = (file: File) => {
+    const imageUrl = URL.createObjectURL(file);
+    setUserFormState((prevState) => ({ ...prevState, imageUrl }));
+    validateAndSetError('imageUrl', imageUrl);
+
+    // TODO: S3 이미지 업로드 로직 추가
   };
 
-  const handleBirthChange = (value: string) => {
-    const formattedDate = formatDate(value);
-    setUserFormState({ ...userFormState, birth: formattedDate });
-    validateAndSetError('birth', formattedDate);
-  };
+  const handleInputChange = (field: string, value: string) => {
+    let formattedValue = value;
 
-  const handlePhoneChange = (value: string) => {
-    const formattedPhone = formatPhoneNumber(value);
-    setUserFormState({ ...userFormState, phone: formattedPhone });
-    validateAndSetError('phone', formattedPhone);
-  };
+    if (field === 'birth') {
+      formattedValue = formatDate(value);
+    } else if (field === 'phone') {
+      formattedValue = formatPhoneNumber(value);
+    }
 
-  const handleAddressChange = (value: string) => {
-    setUserFormState({ ...userFormState, address: value });
-    validateAndSetError('address', value);
+    setUserFormState((prevState) => ({
+      ...prevState,
+      [field]: formattedValue,
+    }));
+    validateAndSetError(field, formattedValue);
   };
 
   const handleSubmit = async () => {
@@ -90,10 +86,12 @@ export default function SettingProfilePage() {
       userFormState.birth,
       userFormState.phone,
       userFormState.address,
+      userFormState.imageUrl,
       user.userName,
       formatDate(user.birth),
       formatPhoneNumber(user.phone),
-      user.address
+      user.address,
+      user.imageUrl
     );
     if (validationError) {
       setErrorMessage(validationError);
@@ -105,7 +103,9 @@ export default function SettingProfilePage() {
           userFormState.birth,
           userFormState.phone,
           userFormState.address,
-          profileImage === '/images/default-profile.png' ? '' : profileImage
+          userFormState.imageUrl === '/images/default-profile.png'
+            ? ''
+            : userFormState.imageUrl
         );
         SuccessToast('프로필 수정이 완료되었습니다');
         router.back();
@@ -122,29 +122,33 @@ export default function SettingProfilePage() {
         <div className='flex justify-center items-center gap-4 mb-5'>
           <ProfileImageWithButton
             size={100}
-            imageUrl={profileImage}
+            imageUrl={userFormState.imageUrl || '/images/default-profile.png'}
             onImageChange={handleImageChange}
           />
         </div>
         <OutlineInput
           icon={<FaUser />}
           value={userFormState.userName}
-          onChange={handleUserNameChange}
+          onChange={(value) => handleInputChange('userName', value)}
+          id='userName'
         />
         <OutlineInput
           icon={<FaCalendar />}
           value={userFormState.birth}
-          onChange={handleBirthChange}
+          onChange={(value) => handleInputChange('birth', value)}
+          id='birth'
         />
         <OutlineInput
           icon={<FaPhone />}
           value={userFormState.phone}
-          onChange={handlePhoneChange}
+          onChange={(value) => handleInputChange('phone', value)}
+          id='phone'
         />
         <OutlineInput
           icon={<FaMapMarkerAlt />}
           value={userFormState.address}
-          onChange={handleAddressChange}
+          onChange={(value) => handleInputChange('address', value)}
+          id='address'
         />
       </div>
       <ButtonWithError errorMessage={errorMessage} onClick={handleSubmit} />

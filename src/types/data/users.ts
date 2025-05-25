@@ -27,6 +27,7 @@ export interface TMajorInfo {
 export interface TUserResponse {
   userId: number;
   userName: string;
+  imageUrl: string;
   birth: string;
   phone: string;
   address: string;

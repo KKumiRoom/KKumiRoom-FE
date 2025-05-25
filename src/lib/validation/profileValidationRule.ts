@@ -17,10 +17,12 @@ export function validateProfile(
   birth: string,
   phone: string,
   address: string,
+  imageUrl: string,
   originalUserName: string,
   originalBirth: string,
   originalPhone: string,
-  originalAddress: string
+  originalAddress: string,
+  originalImageUrl: string
 ): string {
   const userNameValidation = validateField(userName, [
     { condition: (v: string) => !v, message: '이름을 입력해주세요.' },
@@ -47,14 +49,15 @@ export function validateProfile(
   ]);
 
   const sameInfoValidation = validateField(
-    { userName, birth, phone, address },
+    { userName, birth, phone, address, imageUrl },
     [
       {
         condition: (v) =>
           v.userName === originalUserName &&
           v.birth === originalBirth &&
           v.phone === originalPhone &&
-          v.address === originalAddress,
+          v.address === originalAddress &&
+          v.imageUrl === originalImageUrl,
         message: '이전 사용자 정보와 같습니다',
       },
     ]

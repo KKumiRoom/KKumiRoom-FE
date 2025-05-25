@@ -16,7 +16,7 @@ export default function useUserData() {
     ? {
         userId: userData.data.userId,
         userName: userData.data.userName,
-        imageUrl: '/images/default-profile.png',
+        imageUrl: userData.data.imageUrl,
         birth: userData.data.birth,
         phone: userData.data.phone,
         address: userData.data.address,
