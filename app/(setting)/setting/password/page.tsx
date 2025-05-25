@@ -2,6 +2,7 @@
 
 import ButtonWithError from '@/components/molecules/ButtonWithError';
 import OutlineInput from '@/components/molecules/OutlineInput';
+import useUserApi from '@/hooks/useUserApi';
 import { useState, useEffect } from 'react';
 import { ErrorToast, SuccessToast } from '@/lib/utils/notifications';
 import { validatePasswordChange } from '@/lib/validation/passwordValidationRule';
@@ -11,6 +12,7 @@ export default function SettingPasswordPage() {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState(' ');
+  const { updateUserPassword } = useUserApi();
 
   // 모든 필드의 값이 변경될 때마다 전체 유효성 검사 실행
   useEffect(() => {
@@ -46,10 +48,9 @@ export default function SettingPasswordPage() {
     }
 
     try {
-      // TODO: API 호출 구현
-      // const response = await updatePassword({ currentPassword: password, newPassword });
+      await updateUserPassword(password, newPassword);
       SuccessToast('비밀번호가 변경되었습니다.');
-      // 성공 시 입력 필드 초기화
+
       setPassword('');
       setNewPassword('');
       setNewPasswordConfirm('');

@@ -17,6 +17,12 @@ interface UpdateUserProfileRequest {
   address: string;
   imageUrl: string;
 }
+
+interface UpdateUserPasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
 /**
  * 사용자 관련 API 호출을 위한 커스텀 훅
  */
@@ -58,9 +64,21 @@ export default function useUserApi() {
     return create<UpdateUserProfileRequest, void>('/api/users/me', body);
   };
 
+  const updateUserPassword = async (
+    currentPassword: string,
+    newPassword: string
+  ) => {
+    const body: UpdateUserPasswordRequest = {
+      currentPassword,
+      newPassword,
+    };
+    return create<UpdateUserPasswordRequest, void>('/api/users/password', body);
+  };
+
   return {
     updateInterestMajor,
     updateUserSchool,
     updateUserProfile,
+    updateUserPassword,
   };
 }
