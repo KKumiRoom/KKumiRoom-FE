@@ -14,9 +14,9 @@
   --confirm: #6a8dff;
   --lemon: #ffd65a;
   --mint: #9acebf;
-  --device-width: 390px;
+  --device-width: 500px;
   --device-height: 844px;
-  --outer-background: #ffffff;
+  --outer-background: linear-gradient(180deg, #ffffff, #e3f6f1);
 }
 
 @theme inline {
@@ -41,13 +41,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #353030;
     --foreground: #ededed;
     --primary: #4d9a83;
     --secondary: #a8c9a3;
     --tertiary: #8ba6b8;
     --cloud: #141414;
-    --outer-background: #000000;
+    --outer-background: linear-gradient(180deg, #01431c, #4d7349);
   }
 }
 
