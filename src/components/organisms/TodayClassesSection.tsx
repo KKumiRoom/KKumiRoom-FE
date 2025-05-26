@@ -56,7 +56,7 @@ export default function TodayClassesSection({
             />
           ))
         ) : (
-          <div className='w-full flex justify-center items-center gap-3'>
+          <div className='w-full flex justify-center items-center gap-3 pt-8'>
             <Image
               src='/images/cardImage/Clock.png'
               alt='clock'
