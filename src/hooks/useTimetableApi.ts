@@ -8,6 +8,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 interface TimetableItem {
   courseId: number;
   courseName: string;
+  courseType: '공통' | '선택';
   period: number;
   day: string;
 }
@@ -32,7 +33,7 @@ const useTimetableApi = () => {
     period: number,
     day: string
   ): Promise<void> => {
-    await create(`${API_URL}/api/timeTable`, {
+    await create(`${API_URL}/api/timeTableEntry`, {
       courseId,
       period,
       day,
@@ -47,7 +48,7 @@ const useTimetableApi = () => {
     period: number,
     day: string
   ): Promise<void> => {
-    await create(`${API_URL}/api/timeTable/delete`, {
+    await create(`${API_URL}/api/timeTableEntry/delete`, {
       period,
       day,
     });
