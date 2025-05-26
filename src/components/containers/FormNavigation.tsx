@@ -63,8 +63,9 @@ function FormNavigation({ onFirstStep }: FormNavigationProps) {
             handleSuccess();
           }
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
-        ErrorToast(`회원가입 중 오류가 발생했습니다.${error}`);
+        ErrorToast(`회원가입 중 오류가 발생했습니다`);
       } finally {
         setIsSubmitting(false);
       }

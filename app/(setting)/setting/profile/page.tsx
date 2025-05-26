@@ -109,8 +109,9 @@ export default function SettingProfilePage() {
         );
         SuccessToast('프로필 수정이 완료되었습니다');
         router.back();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
-        ErrorToast(`프로필 수정에 실패했습니다${error}`);
+        ErrorToast(`프로필 수정에 실패했습니다`);
       }
     }
   };

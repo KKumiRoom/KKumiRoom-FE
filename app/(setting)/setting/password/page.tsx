@@ -55,8 +55,9 @@ export default function SettingPasswordPage() {
       setNewPassword('');
       setNewPasswordConfirm('');
       setErrorMessage('');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      ErrorToast(`비밀번호 변경에 실패했습니다.${error}`);
+      ErrorToast(`비밀번호 변경에 실패했습니다.`);
     }
   };
 

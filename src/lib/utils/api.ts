@@ -22,9 +22,10 @@ export const refreshAccessToken = async (): Promise<boolean> => {
       }
       return false;
     }
-    return true; // 토큰 갱신 성공
+    return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    ErrorToast(`토큰 갱신 중 오류가 발생했습니다 : ${error}`);
+    ErrorToast(`토근 갱신을 실패했습니다.`);
     // 에러 발생 시에도 로그인으로 이동
     if (!isServer()) {
       window.location.href = '/login';

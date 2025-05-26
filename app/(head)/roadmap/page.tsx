@@ -1,6 +1,6 @@
 'use client';
 
-import SubjectFilterForm from '@/components/molecules/SubjectFilterForm';
+import SubjectFilterForm from '@/components/molecules/MajorFilterForm';
 import SubjectSection from '@/components/molecules/SubjectSection';
 import SubjectSectionSkeleton from '@/components/molecules/SubjectSectionSkeleton';
 import { SECTION_TYPES } from '@/constants/departmentData';

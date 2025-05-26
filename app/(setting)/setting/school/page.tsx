@@ -214,8 +214,9 @@ export default function SettingSchoolPage() {
 
       SuccessToast('학교 정보가 변경되었습니다');
       router.back();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      ErrorToast(`학교 정보 변경에 실패했습니다${error}`);
+      ErrorToast(`학교 정보 변경에 실패했습니다`);
     } finally {
       setIsSubmitting(false);
     }

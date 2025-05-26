@@ -91,8 +91,6 @@ export default function SettingMajorPage() {
       await updateInterestMajor(selectedMajor.name);
       SuccessToast('관심학과가 변경되었습니다');
       router.back();
-    } catch (error) {
-      ErrorToast(`관심학과 변경에 실패했습니다${error}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -140,8 +138,9 @@ export default function SettingMajorPage() {
               setSelectedDepartment(matchingMajor.majorId);
             }
           }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
-          ErrorToast(`에러가 발생했습니다: ${error}`);
+          ErrorToast(`에러가 발생했습니다`);
         }
       };
 

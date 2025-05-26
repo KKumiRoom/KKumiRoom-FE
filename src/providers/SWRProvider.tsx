@@ -56,7 +56,7 @@ export const globalErrorHandler = (error: Error): void => {
     }
   } else {
     // 프로덕션 환경에서는 최소한의 로깅
-    ErrorToast(error.message);
+    ErrorToast('정보를 불러오는데 실패했습니다');
   }
 };
 
