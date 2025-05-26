@@ -15,7 +15,7 @@ export default function ProfileRoadmapCard({
         image='/images/cardImage/location.png'
         title='원하는 학과를 선택해 주세요'
         description='꾸미룸에서 원하는 학과에 가기 위해 필요한 수업을 안내해줄게요!'
-        href='/roadmap'
+        href='/setting/major'
         className='bg-cloud'
       />
     );

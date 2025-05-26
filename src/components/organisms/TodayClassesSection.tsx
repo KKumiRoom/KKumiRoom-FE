@@ -56,8 +56,20 @@ export default function TodayClassesSection({
             />
           ))
         ) : (
-          <div className='text-sm text-center w-full'>
-            오늘은 수업이 없어요!
+          <div className='w-full flex justify-center items-center gap-3'>
+            <Image
+              src='/images/cardImage/Clock.png'
+              alt='clock'
+              width={30}
+              height={30}
+            />
+            <p className='font-semibold text-lg'>오늘은 수업이 없어요!</p>
+            <Image
+              src='/images/cardImage/Clock.png'
+              alt='clock'
+              width={30}
+              height={30}
+            />
           </div>
         )}
       </div>
