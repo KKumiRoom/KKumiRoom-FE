@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
     '/api/auth/login',
     '/api/auth/register',
     '/api/auth/refresh',
-    '/api/openapi/schools',
+    '/api/load-schools',
   ];
 
   const staticFilePaths = ['/_next', '/favicon.ico', '/images', '/fonts'];
