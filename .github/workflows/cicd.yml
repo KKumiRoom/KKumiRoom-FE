@@ -22,6 +22,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+      # pnpm 설치 (corepack 사용)
+      - name: Enable Corepack and install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm --version
 
       # 프로젝트 빌드
       - name: Build Next.js app
