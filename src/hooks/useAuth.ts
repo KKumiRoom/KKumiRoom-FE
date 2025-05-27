@@ -26,11 +26,6 @@ function useAuth() {
     setError(null);
 
     try {
-      await create<Record<string, never>, ApiResponse>(
-        '/api/auth/sign-out',
-        {}
-      );
-
       const response = await create<TAuth, ApiResponse>(
         '/api/auth/sign-in',
         data
