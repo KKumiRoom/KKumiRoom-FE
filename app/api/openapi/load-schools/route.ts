@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 async function fetchSchoolsData() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-  const response = await fetch(`${apiUrl}/api/schools`, {
+  const response = await fetch(`${apiUrl}/api/openapi/schools`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
