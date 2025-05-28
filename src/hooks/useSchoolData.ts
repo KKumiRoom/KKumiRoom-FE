@@ -11,7 +11,7 @@ export function useSchoolData() {
 
   useEffect(() => {
     const fetchSchools = async () => {
-      const response = await fetch('/api/load-schools', {
+      const response = await fetch('/api/init-schools', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
